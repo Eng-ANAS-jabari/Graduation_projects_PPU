@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام تقييم مشاريع التخرج | النسخة النهائية</title>
+    <title>نظام تقييم مشاريع التخرج | النسخة المحسنة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -71,17 +71,6 @@
             max-width: 500px;
             max-height: 80vh;
             overflow-y: auto;
-        }
-        
-        .admin-student-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            margin: 5px 0;
-            background: #f8fafc;
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
         }
         
         /* تخصيص شريط البحث */
@@ -154,6 +143,67 @@
             background: #f8fafc;
         }
         
+        /* بطاقات الطلاب في الإدارة */
+        .student-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f1f5f9;
+            padding: 8px 16px;
+            border-radius: 12px;
+            margin: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .student-tag:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+        
+        /* تصميم الإشعارات */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            z-index: 9999;
+            animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .notification-success { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .notification-error { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+        .notification-info { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
+        .notification-warning { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
+        /* تأثيرات خاصة */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
+        }
+        
         @media print { 
             .no-print { display: none !important; } 
             body { padding: 0 !important; background: white !important; } 
@@ -169,7 +219,7 @@
         <!-- واجهة اختيار الدور -->
         <div id="roleSelection" class="bg-white p-10 rounded-[2.5rem] shadow-2xl text-center no-print border border-slate-200 fade-in">
             <div class="mb-8">
-                <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-r from-indigo-600 to-emerald-600 rounded-full flex items-center justify-center">
+                <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-r from-indigo-600 to-emerald-600 rounded-full flex items-center justify-center pulse">
                     <i class="fas fa-graduation-cap text-white text-4xl"></i>
                 </div>
                 <h2 class="text-3xl font-black mb-2 text-slate-800">نظام إدارة مشاريع التخرج العلمية</h2>
@@ -177,10 +227,10 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <button onclick="requestAdminAccess()" class="group p-8 bg-gradient-to-br from-slate-50 to-white border-2 border-slate-200 rounded-[2.5rem] hover:from-slate-900 hover:to-slate-800 hover:text-white transition-all duration-300 shadow-lg">
+                <button onclick="requestAdminAccess()" class="group p-8 bg-gradient-to-br from-slate-50 to-white border-2 border-slate-200 rounded-[2.rem] hover:from-slate-900 hover:to-slate-800 hover:text-white transition-all duration-300 shadow-lg">
                     <div class="text-4xl mb-4">🔐</div>
                     <div class="text-xl font-black">الإدارة العلمية</div>
-                    <p class="text-sm mt-2 text-slate-500 group-hover:text-slate-300">بوابة إدارة المشاريع والبيانات</p>
+                    <p class="text-sm mt-2 text-slate-500 group-hover:text-slate-300">بوابة إدارة المشاريع والطلاب</p>
                 </button>
 
                 <button onclick="setRole('supervisor')" class="group p-8 bg-gradient-to-br from-white to-indigo-50 border-2 border-indigo-200 rounded-[2.5rem] hover:from-indigo-600 hover:to-indigo-800 hover:text-white transition-all duration-300 shadow-lg">
@@ -242,9 +292,27 @@
                 </div>
             </div>
             
+            <!-- توجيهات الإدارة -->
+            <div class="px-6 py-3 bg-gradient-to-r from-indigo-50 to-white border-b border-slate-200">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-info text-indigo-600"></i>
+                        </div>
+                        <p class="text-sm text-slate-600">إدارة الطلاب العالمية: أضف الطلاب مرة واحدة ليتمكن جميع المستخدمين من استخدامها</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="showGlobalStudentsModal()" 
+                                class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2">
+                            <i class="fas fa-users"></i> إدارة الطلاب العالميين
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
             <div class="p-6 space-y-8">
                 <!-- أدوات الإدارة -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <!-- استيراد البيانات -->
                     <div class="academic-card p-6">
                         <div class="flex items-center gap-4 mb-6">
@@ -278,6 +346,27 @@
                                 class="w-full bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
                             <i class="fas fa-plus"></i> إضافة مشروع علمي
                         </button>
+                    </div>
+                    
+                    <!-- إدارة الطلاب -->
+                    <div class="academic-card p-6 glow">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center">
+                                <i class="fas fa-users text-2xl text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-lg">الطلاب العالميون</h3>
+                                <p class="text-sm text-slate-600">قائمة الطلاب المتاحة لجميع المستخدمين</p>
+                            </div>
+                        </div>
+                        <button onclick="showGlobalStudentsModal()" 
+                                class="w-full bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-cog"></i> إدارة الطلاب
+                        </button>
+                        <div class="mt-4 text-center">
+                            <span class="text-sm font-bold text-purple-600" id="globalStudentsCount">0</span>
+                            <span class="text-sm text-slate-500"> طالب متاح</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -468,13 +557,18 @@
                     </div>
                 </div>
                 
-                <!-- إضافة الطلاب -->
+                <!-- اختيار الطلاب -->
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
                         <label class="block font-bold text-slate-700">الطلاب المشاركون</label>
-                        <button type="button" onclick="addStudentField()" class="text-sm text-indigo-600 hover:text-indigo-800 font-bold">
-                            <i class="fas fa-plus ml-1"></i> إضافة طالب
-                        </button>
+                        <div class="flex gap-2">
+                            <button type="button" onclick="useGlobalStudents()" class="text-sm text-purple-600 hover:text-purple-800 font-bold">
+                                <i class="fas fa-users ml-1"></i> استخدام القائمة العالمية
+                            </button>
+                            <button type="button" onclick="addStudentField()" class="text-sm text-indigo-600 hover:text-indigo-800 font-bold">
+                                <i class="fas fa-plus ml-1"></i> إضافة طالب
+                            </button>
+                        </div>
                     </div>
                     <div id="studentsContainer" class="space-y-3">
                         <div class="flex gap-3">
@@ -484,6 +578,12 @@
                                 <i class="fas fa-times"></i>
                             </button>
                         </div>
+                    </div>
+                    <div id="globalStudentsHint" class="hidden bg-purple-50 p-3 rounded-lg border border-purple-200">
+                        <p class="text-sm text-purple-700">
+                            <i class="fas fa-info-circle ml-1"></i>
+                            تم استخدام القائمة العالمية للطلاب. يمكنك تعديل الأسماء يدوياً إذا أردت.
+                        </p>
                     </div>
                 </div>
                 
@@ -501,6 +601,113 @@
                     </button>
                     <button onclick="saveNewProject()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-bold transition-all">
                         <i class="fas fa-save ml-2"></i> حفظ المشروع
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إدارة الطلاب العالميين -->
+    <div id="globalStudentsModal" class="fixed inset-0 bg-black/50 z-50 items-center justify-center hidden">
+        <div class="bg-white rounded-3xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-slate-800">إدارة الطلاب العالميين</h3>
+                <button onclick="closeGlobalStudentsModal()" class="text-slate-500 hover:text-slate-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- التعليمات -->
+                <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-xl border border-purple-200">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-lightbulb text-purple-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-slate-700">ملاحظة هامة:</p>
+                            <p class="text-sm text-slate-600">الطلاب المضافون هنا سيظهرون تلقائياً لجميع المستخدمين في النظام عند اختيار المشروع</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- قائمة الطلاب الحالية -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-bold text-slate-700 text-lg">الطلاب المسجلون حالياً</h4>
+                        <span class="text-sm text-slate-500" id="currentStudentsCount">0 طالب</span>
+                    </div>
+                    <div id="globalStudentsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
+                        <!-- سيتم تعبئتها ديناميكياً -->
+                    </div>
+                </div>
+                
+                <!-- إضافة طالب جديد -->
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                    <h4 class="font-bold text-slate-700 text-lg mb-4">إضافة طالب جديد</h4>
+                    <div class="flex gap-3">
+                        <input type="text" id="newStudentName" 
+                               class="flex-1 p-3 bg-white border border-slate-300 rounded-xl outline-none" 
+                               placeholder="أدخل اسم الطالب الجديد">
+                        <button onclick="addGlobalStudent()" 
+                                class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-bold transition-all">
+                            <i class="fas fa-plus ml-1"></i> إضافة
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- استيراد من ملف Excel -->
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                    <h4 class="font-bold text-slate-700 text-lg mb-4">استيراد أسماء طلاب من ملف Excel</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-file-excel text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-slate-600">يمكنك استيراد أسماء الطلاب من ملف Excel يحتوي على عمود "اسم الطالب"</p>
+                            </div>
+                        </div>
+                        <input type="file" id="studentsExcelUpload" accept=".xlsx, .xls" class="hidden" onchange="importStudentsExcel(event)">
+                        <button onclick="document.getElementById('studentsExcelUpload').click()" 
+                                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-upload"></i> رفع ملف Excel
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- تصدير القائمة -->
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                    <h4 class="font-bold text-slate-700 text-lg mb-4">تصدير قائمة الطلاب</h4>
+                    <div class="flex gap-3">
+                        <button onclick="exportStudentsList()" 
+                                class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-download"></i> تصدير إلى Excel
+                        </button>
+                        <button onclick="exportStudentsAsText()" 
+                                class="flex-1 bg-slate-600 hover:bg-slate-700 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-file-text"></i> تصدير كملف نصي
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- حذف الكل -->
+                <div class="bg-rose-50 p-6 rounded-xl border border-rose-200">
+                    <h4 class="font-bold text-rose-700 text-lg mb-4">خيارات متقدمة</h4>
+                    <p class="text-sm text-rose-600 mb-4">⚠️ تنبيه: هذه العملية لا يمكن التراجع عنها</p>
+                    <button onclick="clearAllGlobalStudents()" 
+                            class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                        <i class="fas fa-trash"></i> حذف جميع الطلاب العالميين
+                    </button>
+                </div>
+                
+                <!-- الأزرار -->
+                <div class="flex justify-end gap-3 pt-6 border-t border-slate-200">
+                    <button onclick="closeGlobalStudentsModal()" class="px-6 py-3 border border-slate-300 rounded-xl hover:bg-slate-50 transition-all">
+                        إغلاق
+                    </button>
+                    <button onclick="refreshGlobalStudents()" class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-xl font-bold transition-all">
+                        <i class="fas fa-sync-alt ml-2"></i> تحديث القائمة
                     </button>
                 </div>
             </div>
@@ -554,10 +761,10 @@
     </div>
 
     <script>
-        // قاعدة البيانات المحلية مع دعم المشاركين
+        // قاعدة البيانات المحلية مع دعم الطلاب العالميين
         let db = JSON.parse(localStorage.getItem('grad_db_academic')) || {
             projects: [],
-            sharedStudents: ["أحمد محمد", "سارة محمود", "خالد عبد الله", "فاطمة علي", "محمد حسن"],
+            globalStudents: ["أحمد محمد", "سارة محمود", "خالد عبد الله", "فاطمة علي", "محمد حسن"],
             evaluations: {},
             departments: ["علوم الحاسب", "تقنية المعلومات", "نظم المعلومات", "هندسة البرمجيات"],
             lastModified: new Date().toISOString()
@@ -598,7 +805,10 @@
         function updateStats() {
             // إحصائيات المشاريع
             document.getElementById('totalProjects').textContent = db.projects.length;
-            document.getElementById('totalStudents').textContent = db.sharedStudents.length;
+            document.getElementById('totalStudents').textContent = db.globalStudents.length;
+            
+            // تحديث عداد الطلاب العالميين
+            document.getElementById('globalStudentsCount').textContent = db.globalStudents.length;
             
             // حساب التقييمات
             let evalCount = 0;
@@ -686,8 +896,8 @@
             wrap.innerHTML = '';
             const criteria = roles[currentRole].criteria;
 
-            // استخدام الطلاب المشتركين إذا لم يكن هناك طلاب محددين للمشروع
-            const students = project.students && project.students.length > 0 ? project.students : db.sharedStudents;
+            // استخدام الطلاب المحليين إذا وجدوا، وإلا استخدم القائمة العالمية
+            const students = project.students && project.students.length > 0 ? project.students : db.globalStudents;
             
             students.forEach((name, index) => {
                 const temp = document.getElementById('studentTemplate').content.cloneNode(true);
@@ -786,8 +996,9 @@
             if (password === "admin") {
                 showSection('admin');
                 updateStats();
+                renderGlobalStudentsList();
             } else {
-                alert("عذراً، كلمة المرور خاطئة");
+                showNotification("عذراً، كلمة المرور خاطئة", "error");
             }
         }
 
@@ -798,6 +1009,7 @@
             
             if (id === 'admin') {
                 renderAdminData();
+                renderGlobalStudentsList();
             }
         }
 
@@ -862,14 +1074,15 @@
                     <div class="mt-4">
                         <div class="flex justify-between items-center mb-3">
                             <div class="text-xs font-bold text-slate-400">الطلاب المشاركون:</div>
-                            <span class="text-xs text-slate-500">${p.students ? p.students.length : 0} طالب</span>
+                            <span class="text-xs text-slate-500">${p.students ? p.students.length : db.globalStudents.length} طالب</span>
                         </div>
                         <div class="flex flex-wrap gap-2">
-                            ${(p.students && p.students.length > 0 ? p.students : db.sharedStudents.slice(0, 4)).map(s => `
+                            ${(p.students && p.students.length > 0 ? p.students : db.globalStudents.slice(0, 4)).map(s => `
                                 <span class="bg-slate-100 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-lg">
                                     <i class="fas fa-user-graduate ml-1"></i> ${s}
                                 </span>
                             `).join('')}
+                            ${p.students && p.students.length > 4 ? `<span class="bg-slate-200 text-slate-600 text-xs font-bold px-3 py-1.5 rounded-lg">+${p.students.length - 4}</span>` : ''}
                         </div>
                     </div>
                     
@@ -877,14 +1090,226 @@
                         <div class="text-xs text-slate-500">
                             <i class="fas fa-clock ml-1"></i> ${formatDate(p.createdAt)}
                         </div>
-                        <button onclick="viewProjectDetails('${p.id}')" class="text-sm text-indigo-600 hover:text-indigo-800 font-bold">
-                            <i class="fas fa-eye ml-1"></i> تفاصيل
-                        </button>
+                        <div class="flex gap-2">
+                            <button onclick="viewProjectDetails('${p.id}')" class="text-sm text-indigo-600 hover:text-indigo-800 font-bold">
+                                <i class="fas fa-eye ml-1"></i> تفاصيل
+                            </button>
+                            <button onclick="manageProjectStudents('${p.id}')" class="text-sm text-purple-600 hover:text-purple-800 font-bold">
+                                <i class="fas fa-users ml-1"></i> الطلاب
+                            </button>
+                        </div>
                     </div>
                 </div>
                 `;
             }).join('');
         }
+
+        // إدارة الطلاب العالميين
+        function showGlobalStudentsModal() {
+            renderGlobalStudentsList();
+            document.getElementById('globalStudentsModal').classList.remove('hidden');
+        }
+
+        function closeGlobalStudentsModal() {
+            document.getElementById('globalStudentsModal').classList.add('hidden');
+        }
+
+        function renderGlobalStudentsList() {
+            const list = document.getElementById('globalStudentsList');
+            const count = document.getElementById('currentStudentsCount');
+            
+            if (db.globalStudents.length === 0) {
+                list.innerHTML = `
+                    <div class="col-span-full text-center py-8">
+                        <div class="text-4xl mb-4 text-slate-300">👥</div>
+                        <p class="text-slate-500">لا يوجد طلاب مسجلين في القائمة العالمية</p>
+                    </div>
+                `;
+                count.textContent = '0 طالب';
+                return;
+            }
+            
+            list.innerHTML = db.globalStudents.map((student, index) => `
+                <div class="student-tag">
+                    <div class="flex-1">
+                        <div class="font-bold text-slate-700">${student}</div>
+                        <div class="text-xs text-slate-400">طالب ${index + 1}</div>
+                    </div>
+                    <button onclick="removeGlobalStudent(${index})" class="text-rose-500 hover:text-rose-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `).join('');
+            
+            count.textContent = `${db.globalStudents.length} طالب`;
+        }
+
+        function addGlobalStudent() {
+            const input = document.getElementById('newStudentName');
+            const name = input.value.trim();
+            
+            if (!name) {
+                showNotification('يرجى إدخال اسم الطالب', 'error');
+                return;
+            }
+            
+            if (db.globalStudents.includes(name)) {
+                showNotification('هذا الطالب مسجل بالفعل', 'warning');
+                return;
+            }
+            
+            db.globalStudents.push(name);
+            saveDatabase();
+            renderGlobalStudentsList();
+            updateStats();
+            
+            input.value = '';
+            showNotification('تم إضافة الطالب بنجاح', 'success');
+        }
+
+        function removeGlobalStudent(index) {
+            if (confirm('هل أنت متأكد من حذف هذا الطالب من القائمة العالمية؟')) {
+                db.globalStudents.splice(index, 1);
+                saveDatabase();
+                renderGlobalStudentsList();
+                updateStats();
+                showNotification('تم حذف الطالب بنجاح', 'warning');
+            }
+        }
+
+        function importStudentsExcel(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const data = new Uint8Array(event.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const json = XLSX.utils.sheet_to_json(sheet);
+                    
+                    let importedCount = 0;
+                    
+                    json.forEach(row => {
+                        const studentName = row['اسم الطالب'] || row['student'] || row['Student'] || row['اسم'] || row['الطالب'];
+                        
+                        if (studentName && !db.globalStudents.includes(studentName)) {
+                            db.globalStudents.push(studentName);
+                            importedCount++;
+                        }
+                    });
+                    
+                    saveDatabase();
+                    renderGlobalStudentsList();
+                    updateStats();
+                    showNotification(`تم استيراد ${importedCount} طالب جديد`, 'success');
+                    
+                } catch (error) {
+                    console.error('Import error:', error);
+                    showNotification('خطأ في استيراد الملف', 'error');
+                }
+            };
+            
+            reader.readAsArrayBuffer(file);
+        }
+
+        function exportStudentsList() {
+            const data = [
+                ["قائمة الطلاب العالميين - نظام إدارة مشاريع التخرج"],
+                ["تاريخ التصدير", new Date().toLocaleDateString('ar-SA')],
+                ["عدد الطلاب", db.globalStudents.length],
+                [],
+                ["م", "اسم الطالب"]
+            ];
+            
+            db.globalStudents.forEach((student, index) => {
+                data.push([index + 1, student]);
+            });
+            
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "الطلاب");
+            XLSX.writeFile(wb, `قائمة_الطلاب_العالميين_${new Date().toISOString().split('T')[0]}.xlsx`);
+            
+            showNotification('تم تصدير قائمة الطلاب', 'success');
+        }
+
+        function exportStudentsAsText() {
+            let content = "قائمة الطلاب العالميين - نظام إدارة مشاريع التخرج\n";
+            content += `تاريخ التصدير: ${new Date().toLocaleDateString('ar-SA')}\n`;
+            content += `عدد الطلاب: ${db.globalStudents.length}\n\n`;
+            
+            db.globalStudents.forEach((student, index) => {
+                content += `${index + 1}. ${student}\n`;
+            });
+            
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `قائمة_الطلاب_${new Date().toISOString().split('T')[0]}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showNotification('تم تصدير القائمة كملف نصي', 'success');
+        }
+
+        function clearAllGlobalStudents() {
+            if (confirm('⚠️ هل أنت متأكد من حذف جميع الطلاب العالميين؟ هذه العملية لا يمكن التراجع عنها.')) {
+                db.globalStudents = [];
+                saveDatabase();
+                renderGlobalStudentsList();
+                updateStats();
+                showNotification('تم حذف جميع الطلاب العالميين', 'warning');
+            }
+        }
+
+        function refreshGlobalStudents() {
+            renderGlobalStudentsList();
+            showNotification('تم تحديث القائمة', 'info');
+        }
+
+        // استخدام القائمة العالمية في إضافة المشروع
+        function useGlobalStudents() {
+            const container = document.getElementById('studentsContainer');
+            const hint = document.getElementById('globalStudentsHint');
+            
+            // تفريغ الحقول الحالية
+            container.innerHTML = '';
+            
+            // إضافة الطلاب العالميين
+            db.globalStudents.slice(0, 6).forEach((student, index) => {
+                const div = document.createElement('div');
+                div.className = 'flex gap-3';
+                div.innerHTML = `
+                    <input type="text" value="${student}" class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none">
+                    ${index > 0 ? `<button type="button" onclick="removeStudentField(this)" class="text-rose-500 hover:text-rose-700">
+                        <i class="fas fa-times"></i>
+                    </button>` : ''}
+                `;
+                container.appendChild(div);
+            });
+            
+            // إضافة حقل فارغ لإمكانية إضافة المزيد
+            const addDiv = document.createElement('div');
+            addDiv.className = 'flex gap-3';
+            addDiv.innerHTML = `
+                <input type="text" placeholder="إضافة طالب إضافي..." class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none">
+                <button type="button" onclick="removeStudentField(this)" class="text-rose-500 hover:text-rose-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(addDiv);
+            
+            // إظهار التلميح
+            hint.classList.remove('hidden');
+            
+            showNotification('تم استخدام القائمة العالمية للطلاب', 'info');
+        }
+
+        // بقية الوظائف تبقى كما هي مع تعديلات طفيفة
+        // [يتبع باقي الكود بدون تغيير كبير...]
 
         function getDepartmentClass(dept) {
             const deptMap = {
@@ -893,9 +1318,9 @@
                 'is': 'department-is',
                 'se': 'department-se',
                 'ce': 'department-ce',
-                'ee': 'department-ee',
-                'me': 'department-cs',
-                'other': 'department-it'
+                'ee': 'department-cs',
+                'me': 'department-it',
+                'other': 'department-is'
             };
             return deptMap[dept] || 'department-cs';
         }
@@ -936,6 +1361,8 @@
 
         function closeAddProjectModal() {
             document.getElementById('addProjectModal').classList.add('hidden');
+            // إعادة تعليم الحقل التلميحي
+            document.getElementById('globalStudentsHint').classList.add('hidden');
         }
 
         function addStudentField() {
@@ -975,12 +1402,12 @@
             
             // التحقق من المدخلات
             if (!title || !supervisor || !department) {
-                alert('يرجى تعبئة جميع الحقول الإلزامية (العنوان، المشرف، القسم)');
+                showNotification('يرجى تعبئة جميع الحقول الإلزامية (العنوان، المشرف، القسم)', 'error');
                 return;
             }
             
             if (students.length === 0) {
-                alert('يرجى إدخال اسم طالب واحد على الأقل');
+                showNotification('يرجى إدخال اسم طالب واحد على الأقل', 'error');
                 return;
             }
             
@@ -1025,6 +1452,28 @@
             }
         }
 
+        function manageProjectStudents(projectId) {
+            const project = db.projects.find(p => p.id === projectId);
+            if (!project) return;
+            
+            let studentsList = project.students && project.students.length > 0 ? 
+                project.students.join('\n') : db.globalStudents.join('\n');
+            
+            const newStudents = prompt('إدارة طلاب المشروع (سطر واحد لكل طالب):', studentsList);
+            if (newStudents !== null) {
+                const studentsArray = newStudents.split('\n')
+                    .map(s => s.trim())
+                    .filter(s => s.length > 0);
+                
+                if (studentsArray.length > 0) {
+                    project.students = studentsArray;
+                    saveDatabase();
+                    renderAdminData();
+                    showNotification('تم تحديث قائمة طلاب المشروع', 'success');
+                }
+            }
+        }
+
         function viewProjectDetails(projectId) {
             const project = db.projects.find(p => p.id === projectId);
             if (!project) return;
@@ -1038,11 +1487,12 @@
             details += `🎓 *القسم:* ${deptName}\n`;
             details += `📅 *السنة:* ${project.year}\n`;
             details += `📚 *الفصل:* ${semesterName}\n`;
-            details += `👥 *عدد الطلاب:* ${project.students ? project.students.length : 0}\n`;
+            details += `👥 *عدد الطلاب:* ${project.students ? project.students.length : db.globalStudents.length}\n`;
             details += `📝 *الوصف:* ${project.description || 'لا يوجد وصف'}\n\n`;
             details += `📊 *الطلاب المشاركون:*\n`;
             
-            (project.students || []).forEach((student, index) => {
+            const students = project.students && project.students.length > 0 ? project.students : db.globalStudents;
+            students.forEach((student, index) => {
                 details += `${index + 1}. ${student}\n`;
             });
             
@@ -1105,11 +1555,17 @@
                                 });
                                 importedCount++;
                             }
+                            
+                            // إضافة الطالب إلى القائمة العالمية إذا لم يكن موجوداً
+                            if (!db.globalStudents.includes(student)) {
+                                db.globalStudents.push(student);
+                            }
                         }
                     });
                     
                     saveDatabase();
                     renderAdminData();
+                    renderGlobalStudentsList();
                     updateStats();
                     showNotification(`تم استيراد ${importedCount} سجل بنجاح`, 'success');
                     
@@ -1127,7 +1583,7 @@
                 ["التقرير العلمي الشامل - مشاريع التخرج"],
                 ["تاريخ التصدير", new Date().toLocaleDateString('ar-SA')],
                 ["عدد المشاريع", db.projects.length],
-                ["عدد الطلاب", db.sharedStudents.length],
+                ["عدد الطلاب العالميين", db.globalStudents.length],
                 [],
                 ["م", "العنوان", "المشرف", "القسم", "السنة", "عدد الطلاب"]
             ];
@@ -1139,7 +1595,7 @@
                     p.supervisor,
                     getDepartmentName(p.department),
                     p.year || '2024',
-                    p.students ? p.students.length : 0
+                    p.students ? p.students.length : db.globalStudents.length
                 ]);
             });
             
@@ -1153,6 +1609,7 @@
 
         function refreshData() {
             renderAdminData();
+            renderGlobalStudentsList();
             updateStats();
             showNotification('تم تحديث البيانات', 'info');
         }
@@ -1163,15 +1620,15 @@
         }
 
         function showNotification(message, type = 'info') {
+            // إزالة أي إشعارات سابقة
+            const existing = document.querySelectorAll('.notification');
+            existing.forEach(el => el.remove());
+            
             const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-xl text-white font-bold shadow-lg z-50 ${
-                type === 'success' ? 'bg-emerald-600' : 
-                type === 'error' ? 'bg-rose-600' : 
-                type === 'warning' ? 'bg-amber-600' : 'bg-indigo-600'
-            }`;
+            notification.className = `notification notification-${type}`;
             notification.innerHTML = `
                 <div class="flex items-center gap-3">
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
                     <span>${message}</span>
                 </div>
             `;
@@ -1179,19 +1636,16 @@
             document.body.appendChild(notification);
             
             setTimeout(() => {
-                notification.style.opacity = '0';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
             }, 3000);
         }
-
-        // بقية الوظائف (واتساب، التصدير، إلخ) تبقى كما هي...
 
         // التصدير
         function exportToExcel() {
             if (!currentProject) {
-                alert('يرجى اختيار مشروع أولاً');
+                showNotification('يرجى اختيار مشروع أولاً', 'error');
                 return;
             }
             
@@ -1222,7 +1676,7 @@
             const ws = XLSX.utils.aoa_to_sheet(data);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "النتائج");
-            XLSX.writeFile(wb, `تقرير_تقييم_${project.title}_${new Date().toISOString().split('T')[0]}.xlsx`);
+            XLSX.writeFile(wb, `تقرير_تقييم_${project.title.replace(/[^\w\s]/gi, '')}_${new Date().toISOString().split('T')[0]}.xlsx`);
             
             showNotification('تم تصدير التقرير إلى Excel', 'success');
         }
@@ -1230,7 +1684,7 @@
         // واتساب
         function showWhatsAppModal() {
             if (!currentProject) {
-                alert('يرجى اختيار مشروع أولاً');
+                showNotification('يرجى اختيار مشروع أولاً', 'error');
                 return;
             }
             
@@ -1357,7 +1811,7 @@
             }
             
             updateStats();
-            console.log('نظام إدارة مشاريع التخرج العلمية - جاهز للاستخدام');
+            console.log('نظام إدارة مشاريع التخرج العلمية - النسخة المحسنة جاهزة للاستخدام');
         });
     </script>
 </body>
