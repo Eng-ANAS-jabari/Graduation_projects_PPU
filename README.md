@@ -84,6 +84,76 @@
             border: 1px solid #e2e8f0;
         }
         
+        /* تخصيص شريط البحث */
+        .search-bar {
+            position: relative;
+        }
+        
+        .search-bar input {
+            padding-right: 40px;
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+        
+        /* تخصيص الأقسام العلمية */
+        .department-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 2px;
+        }
+        
+        .department-cs { background: #e0f2fe; color: #0369a1; }
+        .department-it { background: #f0f9ff; color: #0c4a6e; }
+        .department-is { background: #eff6ff; color: #1d4ed8; }
+        .department-se { background: #fef3c7; color: #92400e; }
+        .department-ce { background: #dcfce7; color: #166534; }
+        
+        /* تصميم البطاقات العلمية */
+        .academic-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .academic-card:hover {
+            border-color: #4f46e5;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1);
+        }
+        
+        /* تصميم الجدول العلمي */
+        .academic-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .academic-table th {
+            background: #f1f5f9;
+            padding: 12px;
+            font-weight: 700;
+            text-align: right;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .academic-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .academic-table tr:hover {
+            background: #f8fafc;
+        }
+        
         @media print { 
             .no-print { display: none !important; } 
             body { padding: 0 !important; background: white !important; } 
@@ -94,52 +164,57 @@
 </head>
 <body class="p-4 md:p-8">
 
-    <div id="app" class="max-w-6xl mx-auto space-y-6">
+    <div id="app" class="max-w-7xl mx-auto space-y-6">
         
         <!-- واجهة اختيار الدور -->
         <div id="roleSelection" class="bg-white p-10 rounded-[2.5rem] shadow-2xl text-center no-print border border-slate-200 fade-in">
-            <h2 class="text-3xl font-black mb-2 text-slate-800">نظام تقييم مشاريع التخرج</h2>
-            <p class="text-slate-500 mb-10">إدارة التقييمات، توزيع الدرجات، واستخراج التقارير النهائية</p>
+            <div class="mb-8">
+                <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-r from-indigo-600 to-emerald-600 rounded-full flex items-center justify-center">
+                    <i class="fas fa-graduation-cap text-white text-4xl"></i>
+                </div>
+                <h2 class="text-3xl font-black mb-2 text-slate-800">نظام إدارة مشاريع التخرج العلمية</h2>
+                <p class="text-slate-500">إدارة وتقييم مشاريع التخرج للكليات العلمية</p>
+            </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <button onclick="requestAdminAccess()" class="group p-8 bg-slate-50 border-4 border-slate-200 rounded-[2.5rem] hover:bg-slate-900 hover:text-white transition-all duration-300 shadow-lg">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <button onclick="requestAdminAccess()" class="group p-8 bg-gradient-to-br from-slate-50 to-white border-2 border-slate-200 rounded-[2.5rem] hover:from-slate-900 hover:to-slate-800 hover:text-white transition-all duration-300 shadow-lg">
                     <div class="text-4xl mb-4">🔐</div>
-                    <div class="text-xl font-black">الإدارة والبيانات</div>
-                    <p class="text-sm mt-2 text-slate-500 group-hover:text-slate-300">كلمة المرور: admin</p>
+                    <div class="text-xl font-black">الإدارة العلمية</div>
+                    <p class="text-sm mt-2 text-slate-500 group-hover:text-slate-300">بوابة إدارة المشاريع والبيانات</p>
                 </button>
 
-                <button onclick="setRole('supervisor')" class="group p-8 bg-white border-4 border-indigo-600 rounded-[2.5rem] hover:bg-indigo-600 hover:text-white transition-all duration-300 shadow-xl">
+                <button onclick="setRole('supervisor')" class="group p-8 bg-gradient-to-br from-white to-indigo-50 border-2 border-indigo-200 rounded-[2.5rem] hover:from-indigo-600 hover:to-indigo-800 hover:text-white transition-all duration-300 shadow-lg">
                     <div class="text-4xl mb-4">📝</div>
                     <div class="text-xl font-black">تقييم المشرف</div>
-                    <p class="text-sm mt-2 text-slate-500 group-hover:text-slate-300">التقييم التحضيري والتنفيذي</p>
+                    <p class="text-sm mt-2 text-indigo-600 group-hover:text-indigo-200">التقييم التحضيري والتنفيذي</p>
                 </button>
                 
-                <button onclick="setRole('examiner')" class="group p-8 bg-white border-4 border-emerald-600 rounded-[2.5rem] hover:bg-emerald-600 hover:text-white transition-all duration-300 shadow-xl">
+                <button onclick="setRole('examiner')" class="group p-8 bg-gradient-to-br from-white to-emerald-50 border-2 border-emerald-200 rounded-[2.5rem] hover:from-emerald-600 hover:to-emerald-800 hover:text-white transition-all duration-300 shadow-lg">
                     <div class="text-4xl mb-4">🎓</div>
                     <div class="text-xl font-black">تقييم المناقش</div>
-                    <p class="text-sm mt-2 text-slate-500 group-hover:text-slate-300">التقييم النهائي والمناقشة</p>
+                    <p class="text-sm mt-2 text-emerald-600 group-hover:text-emerald-200">التقييم النهائي والمناقشة</p>
                 </button>
             </div>
             
             <!-- إحصائيات النظام -->
-            <div class="mt-12 pt-8 border-t border-slate-200">
-                <h3 class="text-lg font-bold text-slate-700 mb-4">📊 إحصائيات النظام</h3>
+            <div class="mt-8 pt-8 border-t border-slate-200">
+                <h3 class="text-lg font-bold text-slate-700 mb-6">📊 الإحصائيات العلمية</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-indigo-50 p-4 rounded-2xl">
+                    <div class="bg-gradient-to-br from-indigo-50 to-white p-4 rounded-2xl border border-indigo-100">
                         <div class="text-xl font-bold text-indigo-700" id="totalProjects">0</div>
-                        <div class="text-sm text-indigo-600">مشروع</div>
+                        <div class="text-sm text-indigo-600">مشروع علمي</div>
                     </div>
-                    <div class="bg-emerald-50 p-4 rounded-2xl">
+                    <div class="bg-gradient-to-br from-emerald-50 to-white p-4 rounded-2xl border border-emerald-100">
                         <div class="text-xl font-bold text-emerald-700" id="totalStudents">0</div>
-                        <div class="text-sm text-emerald-600">طالب</div>
+                        <div class="text-sm text-emerald-600">طالب مسجل</div>
                     </div>
-                    <div class="bg-amber-50 p-4 rounded-2xl">
+                    <div class="bg-gradient-to-br from-amber-50 to-white p-4 rounded-2xl border border-amber-100">
                         <div class="text-xl font-bold text-amber-700" id="totalEvaluations">0</div>
-                        <div class="text-sm text-amber-600">تقييم</div>
+                        <div class="text-sm text-amber-600">تقييم مكتمل</div>
                     </div>
-                    <div class="bg-purple-50 p-4 rounded-2xl">
-                        <div class="text-xl font-bold text-purple-700" id="sharedUsers">0</div>
-                        <div class="text-sm text-purple-600">مستخدم</div>
+                    <div class="bg-gradient-to-br from-purple-50 to-white p-4 rounded-2xl border border-purple-100">
+                        <div class="text-xl font-bold text-purple-700" id="activeDepartments">0</div>
+                        <div class="text-sm text-purple-600">قسم علمي</div>
                     </div>
                 </div>
             </div>
@@ -147,61 +222,110 @@
 
         <!-- لوحة التحكم (المسؤول) -->
         <div id="adminPanel" class="hidden bg-white shadow-2xl rounded-[2.5rem] overflow-hidden border border-slate-200 fade-in">
-            <div class="bg-gradient-to-r from-slate-900 to-slate-800 p-6 text-white flex justify-between items-center">
-                <div>
-                    <h2 class="text-2xl font-bold">لوحة التحكم المركزية</h2>
-                    <p class="text-sm opacity-80 mt-1">إدارة المشاريع والطلاب وتوزيعها</p>
-                </div>
-                <button onclick="goBack()" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm transition-all">
-                    <i class="fas fa-arrow-left ml-2"></i> رجوع
-                </button>
-            </div>
-            <div class="p-8 space-y-8">
-                <!-- أدوات الاستيراد -->
-                <div class="bg-gradient-to-r from-indigo-50 to-white p-8 rounded-3xl border-2 border-dashed border-indigo-200">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 bg-indigo-100 rounded-2xl flex items-center justify-center">
-                            <i class="fas fa-file-excel text-xl text-indigo-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-indigo-800 text-lg">📁 استيراد بيانات المشاريع</h3>
-                            <p class="text-sm text-indigo-600">ارفع ملف Excel لتوزيع الطلاب على المشاريع تلقائياً</p>
-                        </div>
+            <div class="bg-gradient-to-r from-slate-900 to-slate-800 p-6 text-white">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold">وحدة الإدارة العلمية</h2>
+                        <p class="text-sm opacity-80 mt-1">إدارة مشاريع التخرج للكليات العلمية</p>
                     </div>
-                    <input type="file" id="excelUpload" accept=".xlsx, .xls" class="hidden" onchange="importExcel(event)">
-                    <button onclick="document.getElementById('excelUpload').click()" class="bg-indigo-600 text-white px-8 py-3 rounded-2xl font-bold shadow-lg hover:bg-indigo-700 transition-all">
-                        <i class="fas fa-upload ml-2"></i> رفع ملف Excel
+                    <button onclick="goBack()" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm transition-all flex items-center">
+                        <i class="fas fa-arrow-left ml-2"></i> العودة
                     </button>
                 </div>
                 
-                <!-- إدارة الطلاب المشتركين -->
-                <div class="bg-gradient-to-r from-emerald-50 to-white p-8 rounded-3xl border border-emerald-100">
-                    <h3 class="font-bold text-emerald-800 text-lg mb-6 flex items-center gap-3">
-                        <i class="fas fa-users"></i> إدارة أسماء الطلاب المشتركين
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="flex gap-3">
-                            <input type="text" id="newStudentName" placeholder="أدخل اسم طالب جديد" class="flex-1 p-3 bg-white border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
-                            <button onclick="addSharedStudent()" class="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all">
-                                <i class="fas fa-plus ml-2"></i> إضافة
-                            </button>
-                        </div>
-                        <div class="mt-4">
-                            <div class="text-sm font-bold text-slate-600 mb-3">قائمة الطلاب المحفوظة:</div>
-                            <div id="sharedStudentsList" class="space-y-2 max-h-40 overflow-y-auto p-3 bg-slate-50 rounded-xl">
-                                <!-- سيتم تعبئتها تلقائياً -->
+                <!-- شريط البحث -->
+                <div class="relative">
+                    <input type="text" id="adminSearch" placeholder="ابحث عن مشروع، طالب، أو قسم..." 
+                           class="w-full p-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 outline-none"
+                           oninput="filterAdminData()">
+                    <i class="fas fa-search absolute left-3 top-3 text-white/50"></i>
+                </div>
+            </div>
+            
+            <div class="p-6 space-y-8">
+                <!-- أدوات الإدارة -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- استيراد البيانات -->
+                    <div class="academic-card p-6">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center">
+                                <i class="fas fa-file-excel text-2xl text-indigo-600"></i>
                             </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-lg">استيراد البيانات العلمية</h3>
+                                <p class="text-sm text-slate-600">رفع ملف Excel يحتوي على بيانات المشاريع والطلاب</p>
+                            </div>
+                        </div>
+                        <input type="file" id="excelUpload" accept=".xlsx, .xls" class="hidden" onchange="importExcel(event)">
+                        <button onclick="document.getElementById('excelUpload').click()" 
+                                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-upload"></i> رفع ملف بيانات
+                        </button>
+                    </div>
+                    
+                    <!-- إضافة مشروع جديد -->
+                    <div class="academic-card p-6">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center">
+                                <i class="fas fa-plus-circle text-2xl text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-lg">إضافة مشروع جديد</h3>
+                                <p class="text-sm text-slate-600">إضافة مشروع تخرج جديد إلى النظام</p>
+                            </div>
+                        </div>
+                        <button onclick="showAddProjectModal()" 
+                                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-plus"></i> إضافة مشروع علمي
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- إحصائيات مفصلة -->
+                <div class="academic-card p-6">
+                    <h3 class="font-bold text-slate-800 text-xl mb-6 flex items-center gap-3">
+                        <i class="fas fa-chart-bar text-indigo-600"></i>
+                        الإحصائيات التفصيلية
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-indigo-700" id="projectsByDept">0</div>
+                            <div class="text-sm text-slate-600">مشروع/قسم</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-emerald-700" id="avgStudents">0</div>
+                            <div class="text-sm text-slate-600">طالب/مشروع</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-amber-700" id="completionRate">0%</div>
+                            <div class="text-sm text-slate-600">معدل الإكمال</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-purple-700" id="activeSupervisors">0</div>
+                            <div class="text-sm text-slate-600">مشرف نشط</div>
                         </div>
                     </div>
                 </div>
-
+                
                 <!-- قائمة المشاريع -->
                 <div>
-                    <h3 class="font-bold text-slate-800 text-xl mb-6 flex items-center gap-3">
-                        <i class="fas fa-list-ul"></i> قائمة المشاريع المسجلة
-                        <span class="text-sm font-normal text-slate-500 bg-slate-100 px-3 py-1 rounded-full" id="projectsCount">0 مشروع</span>
-                    </h3>
-                    <div id="adminDataList" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-slate-800 text-xl flex items-center gap-3">
+                            <i class="fas fa-project-diagram text-indigo-600"></i>
+                            المشاريع العلمية المسجلة
+                            <span class="text-sm font-normal text-slate-500 bg-slate-100 px-3 py-1 rounded-full" id="projectsCount">0 مشروع</span>
+                        </h3>
+                        <div class="flex gap-2">
+                            <button onclick="exportAcademicReport()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-bold transition-all">
+                                <i class="fas fa-download ml-1"></i> تقرير
+                            </button>
+                            <button onclick="refreshData()" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-4 py-2 rounded-lg text-sm font-bold transition-all">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="adminDataList" class="space-y-6">
                         <!-- سيتم تعبئتها ديناميكياً -->
                     </div>
                 </div>
@@ -284,24 +408,100 @@
         </div>
     </template>
 
-    <!-- نافذة اختيار اسم الطالب -->
-    <div id="studentNameModal" class="fixed inset-0 bg-black/50 z-50 items-center justify-center hidden">
-        <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4">
-            <h3 class="text-xl font-bold text-slate-800 mb-6">اختيار اسم الطالب</h3>
-            <div class="space-y-4">
-                <div class="relative">
-                    <input type="text" id="studentSearch" placeholder="ابحث عن اسم طالب..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none">
-                    <i class="fas fa-search absolute left-3 top-3 text-slate-400"></i>
-                </div>
-                <div id="suggestedStudents" class="max-h-60 overflow-y-auto space-y-2">
-                    <!-- سيتم تعبئتها تلقائياً -->
-                </div>
-                <div class="pt-4 border-t border-slate-200">
-                    <input type="text" id="customStudentName" placeholder="أو أدخل اسم مخصص..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none mb-4">
-                    <div class="flex justify-end gap-3">
-                        <button onclick="closeStudentModal()" class="px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-50">إلغاء</button>
-                        <button onclick="saveStudentName()" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-indigo-700">حفظ</button>
+    <!-- نموذج إضافة مشروع -->
+    <div id="addProjectModal" class="fixed inset-0 bg-black/50 z-50 items-center justify-center hidden">
+        <div class="bg-white rounded-3xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-slate-800">إضافة مشروع تخرج جديد</h3>
+                <button onclick="closeAddProjectModal()" class="text-slate-500 hover:text-slate-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- المعلومات الأساسية -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="block font-bold text-slate-700">عنوان المشروع</label>
+                        <input type="text" id="projectTitleInput" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none" 
+                               placeholder="أدخل عنوان المشروع العلمي">
                     </div>
+                    <div class="space-y-2">
+                        <label class="block font-bold text-slate-700">المشرف الأكاديمي</label>
+                        <input type="text" id="projectSupervisorInput" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none" 
+                               placeholder="اسم المشرف العلمي">
+                    </div>
+                </div>
+                
+                <!-- المعلومات العلمية -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="space-y-2">
+                        <label class="block font-bold text-slate-700">القسم العلمي</label>
+                        <select id="projectDepartment" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none">
+                            <option value="">اختر القسم</option>
+                            <option value="cs">علوم الحاسب</option>
+                            <option value="it">تقنية المعلومات</option>
+                            <option value="is">نظم المعلومات</option>
+                            <option value="se">هندسة البرمجيات</option>
+                            <option value="ce">الهندسة المدنية</option>
+                            <option value="ee">الهندسة الكهربائية</option>
+                            <option value="me">الهندسة الميكانيكية</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block font-bold text-slate-700">السنة الأكاديمية</label>
+                        <select id="projectYear" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none">
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block font-bold text-slate-700">الفصل الدراسي</label>
+                        <select id="projectSemester" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none">
+                            <option value="1">الأول</option>
+                            <option value="2">الثاني</option>
+                            <option value="summer">الصيفي</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- إضافة الطلاب -->
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <label class="block font-bold text-slate-700">الطلاب المشاركون</label>
+                        <button type="button" onclick="addStudentField()" class="text-sm text-indigo-600 hover:text-indigo-800 font-bold">
+                            <i class="fas fa-plus ml-1"></i> إضافة طالب
+                        </button>
+                    </div>
+                    <div id="studentsContainer" class="space-y-3">
+                        <div class="flex gap-3">
+                            <input type="text" class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none" 
+                                   placeholder="اسم الطالب الأول">
+                            <button type="button" onclick="removeStudentField(this)" class="text-rose-500 hover:text-rose-700">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- وصف المشروع -->
+                <div class="space-y-2">
+                    <label class="block font-bold text-slate-700">وصف المشروع (اختياري)</label>
+                    <textarea id="projectDescription" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none h-32" 
+                              placeholder="وصف مختصر للمشروع العلمي"></textarea>
+                </div>
+                
+                <!-- الأزرار -->
+                <div class="flex justify-end gap-3 pt-6 border-t border-slate-200">
+                    <button onclick="closeAddProjectModal()" class="px-6 py-3 border border-slate-300 rounded-xl hover:bg-slate-50 transition-all">
+                        إلغاء
+                    </button>
+                    <button onclick="saveNewProject()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-bold transition-all">
+                        <i class="fas fa-save ml-2"></i> حفظ المشروع
+                    </button>
                 </div>
             </div>
         </div>
@@ -355,10 +555,11 @@
 
     <script>
         // قاعدة البيانات المحلية مع دعم المشاركين
-        let db = JSON.parse(localStorage.getItem('grad_db_shared')) || {
+        let db = JSON.parse(localStorage.getItem('grad_db_academic')) || {
             projects: [],
             sharedStudents: ["أحمد محمد", "سارة محمود", "خالد عبد الله", "فاطمة علي", "محمد حسن"],
             evaluations: {},
+            departments: ["علوم الحاسب", "تقنية المعلومات", "نظم المعلومات", "هندسة البرمجيات"],
             lastModified: new Date().toISOString()
         };
         
@@ -373,10 +574,10 @@
                 color: "bg-gradient-to-r from-indigo-600 to-indigo-800",
                 roleName: "المشرف",
                 criteria: [
-                    {id:'book',label:'توثيق البحث',max:25},
+                    {id:'book',label:'توثيق البحث العلمي',max:25},
                     {id:'practical',label:'التنفيذ العملي',max:35},
                     {id:'meetings',label:'الحضور والمتابعة',max:20},
-                    {id:'ethics',label:'أخلاقيات العمل',max:20}
+                    {id:'ethics',label:'أخلاقيات العمل الجماعي',max:20}
                 ] 
             },
             examiner: { 
@@ -385,16 +586,17 @@
                 color: "bg-gradient-to-r from-emerald-600 to-emerald-800",
                 roleName: "المناقش",
                 criteria: [
-                    {id:'report',label:'جودة التقرير',max:25},
-                    {id:'logic',label:'المنطق البرمجي',max:25},
-                    {id:'defense',label:'قوة المناقشة',max:25},
-                    {id:'presentation',label:'العرض المرئي',max:25}
+                    {id:'report',label:'جودة التقرير النهائي',max:25},
+                    {id:'logic',label:'المنطق البرمجي والتصميم',max:25},
+                    {id:'defense',label:'قوة المناقشة والحوار',max:25},
+                    {id:'presentation',label:'العرض المرئي والتقديم',max:25}
                 ] 
             }
         };
 
         // تحميل الإحصائيات
         function updateStats() {
+            // إحصائيات المشاريع
             document.getElementById('totalProjects').textContent = db.projects.length;
             document.getElementById('totalStudents').textContent = db.sharedStudents.length;
             
@@ -405,9 +607,32 @@
             }
             document.getElementById('totalEvaluations').textContent = evalCount;
             
-            // حساب المستخدمين الفريدين
-            let users = JSON.parse(localStorage.getItem('unique_users')) || [];
-            document.getElementById('sharedUsers').textContent = users.length || 1;
+            // حساب الأقسام النشطة
+            const uniqueDepts = [...new Set(db.projects.map(p => p.department).filter(d => d))];
+            document.getElementById('activeDepartments').textContent = uniqueDepts.length;
+            
+            // إحصائيات مفصلة
+            document.getElementById('projectsByDept').textContent = db.projects.length > 0 ? 
+                Math.round(db.projects.length / Math.max(uniqueDepts.length, 1)) : 0;
+            
+            // متوسط الطلاب لكل مشروع
+            let totalStudentsInProjects = 0;
+            db.projects.forEach(p => {
+                totalStudentsInProjects += p.students ? p.students.length : 0;
+            });
+            document.getElementById('avgStudents').textContent = db.projects.length > 0 ? 
+                Math.round(totalStudentsInProjects / db.projects.length) : 0;
+            
+            // معدل الإكمال
+            const completionRate = evalCount > 0 ? Math.min(100, Math.round((evalCount / (db.projects.length * 3)) * 100)) : 0;
+            document.getElementById('completionRate').textContent = `${completionRate}%`;
+            
+            // المشرفين النشطين
+            const uniqueSupervisors = [...new Set(db.projects.map(p => p.supervisor).filter(s => s))];
+            document.getElementById('activeSupervisors').textContent = uniqueSupervisors.length;
+            
+            // تحديث العداد
+            document.getElementById('projectsCount').textContent = `${db.projects.length} مشروع`;
         }
 
         // وظائف اختيار الدور
@@ -438,8 +663,6 @@
                     <input type="date" id="evalDate" class="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none font-bold" value="${new Date().toISOString().split('T')[0]}">
                 </div>`;
             
-            // تسجيل استخدام النظام
-            registerUser();
             showNotification(`مرحباً بك في ${cfg.title}`, 'success');
         }
 
@@ -557,80 +780,12 @@
             }
         }
 
-        // تغيير اسم الطالب
-        function changeStudentName(button) {
-            currentStudentElement = button.closest('.student-card');
-            const currentName = currentStudentElement.querySelector('.student-name-display').textContent;
-            
-            // إظهار النافذة
-            document.getElementById('studentNameModal').classList.remove('hidden');
-            document.getElementById('customStudentName').value = currentName;
-            
-            // تعبئة قائمة الاقتراحات
-            const suggestionsDiv = document.getElementById('suggestedStudents');
-            suggestionsDiv.innerHTML = '';
-            
-            // إضافة الطلاب المشتركين
-            db.sharedStudents.forEach(student => {
-                const div = document.createElement('div');
-                div.className = 'p-3 hover:bg-slate-100 rounded-lg cursor-pointer transition-all';
-                div.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <span class="font-medium">${student}</span>
-                        <i class="fas fa-plus text-slate-400"></i>
-                    </div>
-                `;
-                div.onclick = () => {
-                    document.getElementById('customStudentName').value = student;
-                };
-                suggestionsDiv.appendChild(div);
-            });
-            
-            // البحث في القائمة
-            document.getElementById('studentSearch').addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase();
-                const suggestions = suggestionsDiv.querySelectorAll('div');
-                
-                suggestions.forEach(suggestion => {
-                    const text = suggestion.textContent.toLowerCase();
-                    suggestion.style.display = text.includes(searchTerm) ? 'block' : 'none';
-                });
-            });
-        }
-
-        function closeStudentModal() {
-            document.getElementById('studentNameModal').classList.add('hidden');
-            currentStudentElement = null;
-        }
-
-        function saveStudentName() {
-            if (!currentStudentElement) return;
-            
-            const newName = document.getElementById('customStudentName').value.trim();
-            if (!newName) {
-                alert('يرجى إدخال اسم صحيح');
-                return;
-            }
-            
-            // تحديث الاسم في الواجهة
-            currentStudentElement.querySelector('.student-name-display').textContent = newName;
-            
-            // إضافة إلى قائمة الطلاب المشتركين إذا كان جديداً
-            if (!db.sharedStudents.includes(newName)) {
-                db.sharedStudents.push(newName);
-                saveDatabase();
-                updateStats();
-                showNotification('تم إضافة الاسم إلى القائمة المشتركة', 'success');
-            }
-            
-            closeStudentModal();
-        }
-
         // الإدارة والبيانات
         function requestAdminAccess() {
             const password = prompt("أدخل كلمة مرور الإدارة:");
             if (password === "admin") {
                 showSection('admin');
+                updateStats();
             } else {
                 alert("عذراً، كلمة المرور خاطئة");
             }
@@ -655,169 +810,359 @@
 
         function renderAdminData() {
             const list = document.getElementById('adminDataList');
-            const count = document.getElementById('projectsCount');
             
-            count.textContent = `${db.projects.length} مشروع`;
-            
-            // تحديث قائمة الطلاب المشتركين
-            const studentsList = document.getElementById('sharedStudentsList');
-            studentsList.innerHTML = db.sharedStudents.map(student => `
-                <div class="admin-student-item">
-                    <span class="font-medium">${student}</span>
-                    <button onclick="removeSharedStudent('${student}')" class="text-rose-500 hover:text-rose-700 text-sm">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            `).join('');
-            
-            // تحديث قائمة المشاريع
-            list.innerHTML = db.projects.map(p => `
-                <div class="bg-slate-50 border p-6 rounded-3xl shadow-sm">
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <h5 class="font-black text-indigo-700 mb-1 text-lg">${p.title}</h5>
-                            <p class="text-sm text-slate-500">إشراف: ${p.supervisor}</p>
-                            <div class="flex items-center gap-2 mt-2">
-                                <span class="text-xs font-bold px-3 py-1 rounded-full bg-indigo-100 text-indigo-700">${p.year || 2024}</span>
-                            </div>
-                        </div>
-                        <button onclick="deleteProject('${p.id}')" class="text-rose-500 hover:text-rose-700">
-                            <i class="fas fa-trash"></i>
+            if (db.projects.length === 0) {
+                list.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="text-5xl mb-4 text-slate-300">📚</div>
+                        <h4 class="text-xl font-bold text-slate-600 mb-2">لا توجد مشاريع مسجلة</h4>
+                        <p class="text-slate-500 mb-6">ابدأ بإضافة مشروعك الأول باستخدام زر "إضافة مشروع علمي"</p>
+                        <button onclick="showAddProjectModal()" class="bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold">
+                            <i class="fas fa-plus ml-2"></i> إضافة مشروع أول
                         </button>
                     </div>
-                    <div class="mt-4">
-                        <div class="text-xs font-bold text-slate-400 mb-2">الطلاب المسجلين:</div>
-                        <div class="flex flex-wrap gap-2">
-                            ${(p.students && p.students.length > 0 ? p.students : db.sharedStudents.slice(0, 3)).map(s => `
-                                <span class="bg-white border text-xs font-bold px-3 py-1 rounded-full text-slate-600">${s}</span>
-                            `).join('')}
-                            ${p.students && p.students.length > 3 ? `<span class="text-xs text-slate-500">+ ${p.students.length - 3} أكثر</span>` : ''}
-                        </div>
-                    </div>
-                    <div class="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center">
-                        <span class="text-xs text-slate-500">${p.students ? p.students.length : db.sharedStudents.length} طالب</span>
-                        <button onclick="editProject('${p.id}')" class="text-primary hover:text-indigo-700 text-sm font-bold">
-                            <i class="fas fa-edit ml-1"></i> تعديل
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function addSharedStudent() {
-            const input = document.getElementById('newStudentName');
-            const name = input.value.trim();
-            
-            if (!name) {
-                alert('يرجى إدخال اسم الطالب');
+                `;
                 return;
             }
             
-            if (!db.sharedStudents.includes(name)) {
-                db.sharedStudents.push(name);
-                saveDatabase();
-                renderAdminData();
-                updateStats();
-                input.value = '';
-                showNotification('تم إضافة الطالب إلى القائمة المشتركة', 'success');
-            } else {
-                alert('هذا الاسم موجود بالفعل في القائمة');
+            list.innerHTML = db.projects.map(p => {
+                const deptClass = getDepartmentClass(p.department);
+                const deptName = getDepartmentName(p.department);
+                
+                return `
+                <div class="academic-card p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <h5 class="font-black text-slate-800 text-lg">${p.title}</h5>
+                                <span class="department-badge ${deptClass}">${deptName}</span>
+                            </div>
+                            <p class="text-sm text-slate-500">
+                                <i class="fas fa-user-tie ml-1"></i> إشراف: ${p.supervisor}
+                            </p>
+                            <div class="flex items-center gap-4 mt-3">
+                                <span class="text-xs font-bold text-slate-600">
+                                    <i class="fas fa-calendar ml-1"></i> ${p.year || '2024'}
+                                </span>
+                                <span class="text-xs font-bold text-slate-600">
+                                    <i class="fas fa-graduation-cap ml-1"></i> الفصل ${p.semester === '1' ? 'الأول' : p.semester === '2' ? 'الثاني' : 'الصيفي'}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="editProject('${p.id}')" class="text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteProject('${p.id}')" class="text-rose-500 hover:text-rose-700">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <div class="text-xs font-bold text-slate-400">الطلاب المشاركون:</div>
+                            <span class="text-xs text-slate-500">${p.students ? p.students.length : 0} طالب</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            ${(p.students && p.students.length > 0 ? p.students : db.sharedStudents.slice(0, 4)).map(s => `
+                                <span class="bg-slate-100 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-lg">
+                                    <i class="fas fa-user-graduate ml-1"></i> ${s}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t border-slate-200 flex justify-between items-center">
+                        <div class="text-xs text-slate-500">
+                            <i class="fas fa-clock ml-1"></i> ${formatDate(p.createdAt)}
+                        </div>
+                        <button onclick="viewProjectDetails('${p.id}')" class="text-sm text-indigo-600 hover:text-indigo-800 font-bold">
+                            <i class="fas fa-eye ml-1"></i> تفاصيل
+                        </button>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function getDepartmentClass(dept) {
+            const deptMap = {
+                'cs': 'department-cs',
+                'it': 'department-it',
+                'is': 'department-is',
+                'se': 'department-se',
+                'ce': 'department-ce',
+                'ee': 'department-ee',
+                'me': 'department-cs',
+                'other': 'department-it'
+            };
+            return deptMap[dept] || 'department-cs';
+        }
+
+        function getDepartmentName(dept) {
+            const deptMap = {
+                'cs': 'علوم الحاسب',
+                'it': 'تقنية المعلومات',
+                'is': 'نظم المعلومات',
+                'se': 'هندسة البرمجيات',
+                'ce': 'الهندسة المدنية',
+                'ee': 'الهندسة الكهربائية',
+                'me': 'الهندسة الميكانيكية',
+                'other': 'أخرى'
+            };
+            return deptMap[dept] || 'غير محدد';
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'غير محدد';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ar-SA');
+        }
+
+        function filterAdminData() {
+            const searchTerm = document.getElementById('adminSearch').value.toLowerCase();
+            const projects = document.querySelectorAll('.academic-card');
+            
+            projects.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            });
+        }
+
+        function showAddProjectModal() {
+            document.getElementById('addProjectModal').classList.remove('hidden');
+        }
+
+        function closeAddProjectModal() {
+            document.getElementById('addProjectModal').classList.add('hidden');
+        }
+
+        function addStudentField() {
+            const container = document.getElementById('studentsContainer');
+            const div = document.createElement('div');
+            div.className = 'flex gap-3';
+            div.innerHTML = `
+                <input type="text" class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none" 
+                       placeholder="اسم الطالب">
+                <button type="button" onclick="removeStudentField(this)" class="text-rose-500 hover:text-rose-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(div);
+        }
+
+        function removeStudentField(button) {
+            const container = document.getElementById('studentsContainer');
+            if (container.children.length > 1) {
+                button.closest('.flex').remove();
             }
         }
 
-        function removeSharedStudent(studentName) {
-            if (confirm(`هل تريد حذف "${studentName}" من القائمة؟`)) {
-                db.sharedStudents = db.sharedStudents.filter(s => s !== studentName);
-                saveDatabase();
-                renderAdminData();
-                updateStats();
-                showNotification('تم حذف الطالب من القائمة', 'warning');
+        function saveNewProject() {
+            const title = document.getElementById('projectTitleInput').value.trim();
+            const supervisor = document.getElementById('projectSupervisorInput').value.trim();
+            const department = document.getElementById('projectDepartment').value;
+            const year = document.getElementById('projectYear').value;
+            const semester = document.getElementById('projectSemester').value;
+            const description = document.getElementById('projectDescription').value.trim();
+            
+            // جمع أسماء الطلاب
+            const studentInputs = document.querySelectorAll('#studentsContainer input');
+            const students = Array.from(studentInputs)
+                .map(input => input.value.trim())
+                .filter(name => name.length > 0);
+            
+            // التحقق من المدخلات
+            if (!title || !supervisor || !department) {
+                alert('يرجى تعبئة جميع الحقول الإلزامية (العنوان، المشرف، القسم)');
+                return;
             }
-        }
-
-        function deleteProject(projectId) {
-            if (confirm('هل أنت متأكد من حذف هذا المشروع؟')) {
-                db.projects = db.projects.filter(p => p.id !== projectId);
-                saveDatabase();
-                renderAdminData();
-                updateStats();
-                showNotification('تم حذف المشروع', 'warning');
+            
+            if (students.length === 0) {
+                alert('يرجى إدخال اسم طالب واحد على الأقل');
+                return;
             }
+            
+            // إنشاء مشروع جديد
+            const newProject = {
+                id: 'proj_' + Date.now(),
+                title,
+                supervisor,
+                department,
+                year,
+                semester,
+                students,
+                description,
+                createdAt: new Date().toISOString(),
+                status: 'نشط'
+            };
+            
+            db.projects.push(newProject);
+            saveDatabase();
+            renderAdminData();
+            updateStats();
+            closeAddProjectModal();
+            
+            // تفريغ الحقول
+            document.getElementById('projectTitleInput').value = '';
+            document.getElementById('projectSupervisorInput').value = '';
+            document.getElementById('projectDescription').value = '';
+            
+            showNotification('تم إضافة المشروع العلمي بنجاح', 'success');
         }
 
         function editProject(projectId) {
             const project = db.projects.find(p => p.id === projectId);
             if (!project) return;
             
-            const newTitle = prompt('تعديل عنوان المشروع:', project.title);
-            if (newTitle) {
+            const newTitle = prompt('تعديل عنوان المشروع العلمي:', project.title);
+            if (newTitle && newTitle !== project.title) {
                 project.title = newTitle;
                 saveDatabase();
                 renderAdminData();
-                showNotification('تم تعديل المشروع', 'info');
+                showNotification('تم تعديل المشروع العلمي', 'info');
+            }
+        }
+
+        function viewProjectDetails(projectId) {
+            const project = db.projects.find(p => p.id === projectId);
+            if (!project) return;
+            
+            const deptName = getDepartmentName(project.department);
+            const semesterName = project.semester === '1' ? 'الأول' : project.semester === '2' ? 'الثاني' : 'الصيفي';
+            
+            let details = `📋 *تفاصيل المشروع العلمي*\n\n`;
+            details += `🏷️ *العنوان:* ${project.title}\n`;
+            details += `👨‍🏫 *المشرف:* ${project.supervisor}\n`;
+            details += `🎓 *القسم:* ${deptName}\n`;
+            details += `📅 *السنة:* ${project.year}\n`;
+            details += `📚 *الفصل:* ${semesterName}\n`;
+            details += `👥 *عدد الطلاب:* ${project.students ? project.students.length : 0}\n`;
+            details += `📝 *الوصف:* ${project.description || 'لا يوجد وصف'}\n\n`;
+            details += `📊 *الطلاب المشاركون:*\n`;
+            
+            (project.students || []).forEach((student, index) => {
+                details += `${index + 1}. ${student}\n`;
+            });
+            
+            alert(details);
+        }
+
+        function deleteProject(projectId) {
+            if (confirm('هل أنت متأكد من حذف هذا المشروع العلمي؟')) {
+                db.projects = db.projects.filter(p => p.id !== projectId);
+                saveDatabase();
+                renderAdminData();
+                updateStats();
+                showNotification('تم حذف المشروع العلمي', 'warning');
             }
         }
 
         function importExcel(e) {
             const file = e.target.files[0];
+            if (!file) return;
+            
             const reader = new FileReader();
             reader.onload = (event) => {
                 try {
-                    const workbook = XLSX.read(new Uint8Array(event.target.result), { type: 'array' });
+                    const data = new Uint8Array(event.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
                     const sheet = workbook.Sheets[workbook.SheetNames[0]];
                     const json = XLSX.utils.sheet_to_json(sheet);
                     
-                    json.forEach(r => {
-                        const p = r['اسم المشروع'] || r['project'] || r['Project'];
-                        const s = r['اسم الطالب'] || r['student'] || r['Student'];
-                        const sup = r['اسم المشرف'] || r['supervisor'] || r['Supervisor'];
+                    let importedCount = 0;
+                    
+                    json.forEach(row => {
+                        const title = row['عنوان المشروع'] || row['project'] || row['Project'];
+                        const student = row['اسم الطالب'] || row['student'] || row['Student'];
+                        const supervisor = row['المشرف'] || row['supervisor'] || row['Supervisor'];
+                        const department = row['القسم'] || row['department'] || 'other';
+                        const year = row['السنة'] || row['year'] || '2024';
                         
-                        if(!p || !s) return;
-                        
-                        let project = db.projects.find(item => item.title === p);
-                        if(project) { 
-                            if(!project.students) project.students = [];
-                            if(!project.students.includes(s)) project.students.push(s); 
+                        if (title && student && supervisor) {
+                            // البحث عن المشروع
+                            let project = db.projects.find(p => p.title === title && p.supervisor === supervisor);
+                            
+                            if (project) {
+                                // إضافة الطالب إذا لم يكن موجوداً
+                                if (!project.students.includes(student)) {
+                                    project.students.push(student);
+                                    importedCount++;
+                                }
+                            } else {
+                                // إنشاء مشروع جديد
+                                db.projects.push({
+                                    id: 'proj_' + Date.now() + Math.random(),
+                                    title,
+                                    supervisor,
+                                    department,
+                                    year,
+                                    semester: '1',
+                                    students: [student],
+                                    createdAt: new Date().toISOString(),
+                                    status: 'نشط'
+                                });
+                                importedCount++;
+                            }
                         }
-                        else db.projects.push({ 
-                            id: Date.now().toString() + Math.random(),
-                            title: p, 
-                            supervisor: sup || "غير معروف", 
-                            students: [s],
-                            year: new Date().getFullYear()
-                        });
                     });
                     
                     saveDatabase();
                     renderAdminData();
                     updateStats();
-                    showNotification(`تم استيراد ${json.length} سجل بنجاح!`, 'success');
+                    showNotification(`تم استيراد ${importedCount} سجل بنجاح`, 'success');
                     
                 } catch (error) {
                     console.error('Import error:', error);
                     showNotification('خطأ في استيراد الملف', 'error');
                 }
             };
+            
             reader.readAsArrayBuffer(file);
+        }
+
+        function exportAcademicReport() {
+            const data = [
+                ["التقرير العلمي الشامل - مشاريع التخرج"],
+                ["تاريخ التصدير", new Date().toLocaleDateString('ar-SA')],
+                ["عدد المشاريع", db.projects.length],
+                ["عدد الطلاب", db.sharedStudents.length],
+                [],
+                ["م", "العنوان", "المشرف", "القسم", "السنة", "عدد الطلاب"]
+            ];
+            
+            db.projects.forEach((p, i) => {
+                data.push([
+                    i + 1,
+                    p.title,
+                    p.supervisor,
+                    getDepartmentName(p.department),
+                    p.year || '2024',
+                    p.students ? p.students.length : 0
+                ]);
+            });
+            
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "المشاريع");
+            XLSX.writeFile(wb, `التقرير_العلمي_${new Date().toISOString().split('T')[0]}.xlsx`);
+            
+            showNotification('تم تصدير التقرير العلمي', 'success');
+        }
+
+        function refreshData() {
+            renderAdminData();
+            updateStats();
+            showNotification('تم تحديث البيانات', 'info');
         }
 
         function saveDatabase() {
             db.lastModified = new Date().toISOString();
-            localStorage.setItem('grad_db_shared', JSON.stringify(db));
-        }
-
-        function registerUser() {
-            let users = JSON.parse(localStorage.getItem('unique_users')) || [];
-            const userKey = 'user_' + Math.random().toString(36).substr(2, 9);
-            
-            if (!users.includes(userKey)) {
-                users.push(userKey);
-                localStorage.setItem('unique_users', JSON.stringify(users));
-            }
+            localStorage.setItem('grad_db_academic', JSON.stringify(db));
         }
 
         function showNotification(message, type = 'info') {
-            // إنشاء إشعار بسيط
             const notification = document.createElement('div');
             notification.className = `fixed top-4 right-4 px-6 py-3 rounded-xl text-white font-bold shadow-lg z-50 ${
                 type === 'success' ? 'bg-emerald-600' : 
@@ -841,105 +1186,7 @@
             }, 3000);
         }
 
-        // واتساب
-        function showWhatsAppModal() {
-            if (!currentProject) {
-                alert('يرجى اختيار مشروع أولاً');
-                return;
-            }
-            
-            const modal = document.getElementById('whatsappModal');
-            modal.style.display = 'flex';
-            
-            // تحديث معاينة الرسالة
-            updateMessagePreview();
-            
-            // تحديث معاينة الرسالة عند التغيير
-            document.getElementById('evaluatorName').addEventListener('input', updateMessagePreview);
-            document.getElementById('customMessage').addEventListener('input', updateMessagePreview);
-        }
-
-        function closeWhatsAppModal() {
-            document.getElementById('whatsappModal').style.display = 'none';
-        }
-
-        function updateMessagePreview() {
-            const evaluatorName = document.getElementById('evaluatorName').value || 'المقيم';
-            const customMessage = document.getElementById('customMessage').value;
-            const project = currentProject;
-            const roleName = roles[currentRole].roleName;
-            const date = document.getElementById('evalDate').value;
-            
-            let message = `📋 *تقرير التقييم النهائي* 📋\n\n`;
-            message += `🎓 *نوع التقييم:* ${roleName}\n`;
-                message += `📁 *اسم المشروع:* ${project.title}\n`;
-            message += `👨‍🏫 *المشرف الأكاديمي:* ${project.supervisor}\n`;
-            message += `📅 *تاريخ التقييم:* ${date}\n\n`;
-            message += `📊 *نتائج تقييم الطلاب:*\n`;
-            message += `══════════════════\n\n`;
-            
-            document.querySelectorAll('.student-card').forEach((card, index) => {
-                const studentName = card.querySelector('.student-name-display').textContent;
-                const totalScore = card.querySelector('.student-total-display').textContent;
-                const grade = card.querySelector('.student-result-text').textContent;
-                
-                message += `👤 *الطالب ${index + 1}:* ${studentName}\n`;
-                message += `⭐ *الدرجة النهائية:* ${totalScore}/100\n`;
-                message += `🏆 *التقدير:* ${grade}\n`;
-                message += `────────────────────\n`;
-            });
-            
-            message += `\n${customMessage}\n\n`;
-            message += `🔸 *ملاحظة:* هذا التقرير تم إنشاؤه تلقائياً بواسطة نظام تقييم مشاريع التخرج`;
-            
-            document.getElementById('messagePreview').textContent = message;
-        }
-
-        function sendWhatsAppMessage() {
-            const evaluatorName = document.getElementById('evaluatorName').value || 'المقيم';
-            const phoneNumber = document.getElementById('phoneNumber').value;
-            const project = currentProject;
-            const roleName = roles[currentRole].roleName;
-            const date = document.getElementById('evalDate').value;
-            
-            let message = `📋 *تقرير التقييم النهائي* 📋%0A%0A`;
-            message += `🎓 *نوع التقييم:* ${roleName}%0A`;
-            message += `👨‍🏫 *اسم المقيم:* ${evaluatorName}%0A`;
-            message += `📁 *اسم المشروع:* ${project.title}%0A`;
-            message += `👨‍🏫 *المشرف الأكاديمي:* ${project.supervisor}%0A`;
-            message += `📅 *تاريخ التقييم:* ${date}%0A%0A`;
-            message += `📊 *نتائج تقييم الطلاب:*%0A`;
-            message += `══════════════════%0A%0A`;
-            
-            document.querySelectorAll('.student-card').forEach((card, index) => {
-                const studentName = card.querySelector('.student-name-display').textContent;
-                const totalScore = card.querySelector('.student-total-display').textContent;
-                const grade = card.querySelector('.student-result-text').textContent;
-                
-                message += `👤 *الطالب ${index + 1}:* ${studentName}%0A`;
-                message += `⭐ *الدرجة النهائية:* ${totalScore}/100%0A`;
-                message += `🏆 *التقدير:* ${grade}%0A`;
-                message += `────────────────────%0A`;
-            });
-            
-            const customMessage = document.getElementById('customMessage').value;
-            if (customMessage.trim()) {
-                message += `%0A${customMessage}%0A%0A`;
-            }
-            
-            message += `🔸 *ملاحظة:* هذا التقرير تم إنشاؤه تلقائياً بواسطة نظام تقييم مشاريع التخرج`;
-            
-            let whatsappURL = `https://wa.me/?text=${message}`;
-            
-            // إذا كان هناك رقم هاتف، إرسال له مباشرة
-            if (phoneNumber.trim()) {
-                const cleanNumber = phoneNumber.replace(/\D/g, '');
-                whatsappURL = `https://wa.me/${cleanNumber}?text=${message}`;
-            }
-            
-            window.open(whatsappURL, '_blank');
-            closeWhatsAppModal();
-        }
+        // بقية الوظائف (واتساب، التصدير، إلخ) تبقى كما هي...
 
         // التصدير
         function exportToExcel() {
@@ -954,9 +1201,11 @@
             
             const data = [
                 ["تقرير نتائج التقييم النهائي"],
+                ["نوع التقييم", roleName],
                 ["المشروع", project.title],
                 ["المشرف الأكاديمي", project.supervisor],
                 ["تاريخ التقييم", date],
+                ["القسم العلمي", getDepartmentName(project.department)],
                 [],
                 ["م", "اسم الطالب", "الدرجة النهائية (من 100)", "التقدير"]
             ];
@@ -978,10 +1227,137 @@
             showNotification('تم تصدير التقرير إلى Excel', 'success');
         }
 
+        // واتساب
+        function showWhatsAppModal() {
+            if (!currentProject) {
+                alert('يرجى اختيار مشروع أولاً');
+                return;
+            }
+            
+            const modal = document.getElementById('whatsappModal');
+            modal.style.display = 'flex';
+            updateMessagePreview();
+        }
+
+        function closeWhatsAppModal() {
+            document.getElementById('whatsappModal').style.display = 'none';
+        }
+
+        function updateMessagePreview() {
+            const evaluatorName = document.getElementById('evaluatorName').value || 'المقيم';
+            const customMessage = document.getElementById('customMessage').value;
+            const project = currentProject;
+            const roleName = roles[currentRole].roleName;
+            const date = document.getElementById('evalDate').value;
+            
+            let message = `📋 *تقرير التقييم النهائي*\n\n`;
+            message += `🎓 *نوع التقييم:* ${roleName}\n`;
+            message += `👨‍🏫 *اسم المقيم:* ${evaluatorName}\n`;
+            message += `📁 *اسم المشروع:* ${project.title}\n`;
+            message += `👨‍🏫 *المشرف الأكاديمي:* ${project.supervisor}\n`;
+            message += `🎓 *القسم العلمي:* ${getDepartmentName(project.department)}\n`;
+            message += `📅 *تاريخ التقييم:* ${date}\n\n`;
+            message += `📊 *نتائج تقييم الطلاب:*\n`;
+            message += `══════════════════\n\n`;
+            
+            document.querySelectorAll('.student-card').forEach((card, index) => {
+                const studentName = card.querySelector('.student-name-display').textContent;
+                const totalScore = card.querySelector('.student-total-display').textContent;
+                const grade = card.querySelector('.student-result-text').textContent;
+                
+                message += `👤 *الطالب ${index + 1}:* ${studentName}\n`;
+                message += `⭐ *الدرجة النهائية:* ${totalScore}/100\n`;
+                message += `🏆 *التقدير:* ${grade}\n`;
+                message += `────────────────────\n`;
+            });
+            
+            message += `\n${customMessage}\n\n`;
+            message += `🔸 *ملاحظة:* هذا التقرير تم إنشاؤه تلقائياً بواسطة نظام إدارة مشاريع التخرج العلمية`;
+            
+            document.getElementById('messagePreview').textContent = message;
+        }
+
+        function sendWhatsAppMessage() {
+            const evaluatorName = document.getElementById('evaluatorName').value || 'المقيم';
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const project = currentProject;
+            const roleName = roles[currentRole].roleName;
+            const date = document.getElementById('evalDate').value;
+            
+            let message = `📋 *تقرير التقييم النهائي*%0A%0A`;
+            message += `🎓 *نوع التقييم:* ${roleName}%0A`;
+            message += `👨‍🏫 *اسم المقيم:* ${evaluatorName}%0A`;
+            message += `📁 *اسم المشروع:* ${project.title}%0A`;
+            message += `👨‍🏫 *المشرف الأكاديمي:* ${project.supervisor}%0A`;
+            message += `🎓 *القسم العلمي:* ${getDepartmentName(project.department)}%0A`;
+            message += `📅 *تاريخ التقييم:* ${date}%0A%0A`;
+            message += `📊 *نتائج تقييم الطلاب:*%0A`;
+            message += `══════════════════%0A%0A`;
+            
+            document.querySelectorAll('.student-card').forEach((card, index) => {
+                const studentName = card.querySelector('.student-name-display').textContent;
+                const totalScore = card.querySelector('.student-total-display').textContent;
+                const grade = card.querySelector('.student-result-text').textContent;
+                
+                message += `👤 *الطالب ${index + 1}:* ${studentName}%0A`;
+                message += `⭐ *الدرجة النهائية:* ${totalScore}/100%0A`;
+                message += `🏆 *التقدير:* ${grade}%0A`;
+                message += `────────────────────%0A`;
+            });
+            
+            const customMessage = document.getElementById('customMessage').value;
+            if (customMessage.trim()) {
+                message += `%0A${customMessage}%0A%0A`;
+            }
+            
+            message += `🔸 *ملاحظة:* هذا التقرير تم إنشاؤه تلقائياً بواسطة نظام إدارة مشاريع التخرج العلمية`;
+            
+            let whatsappURL = `https://wa.me/?text=${message}`;
+            
+            if (phoneNumber.trim()) {
+                const cleanNumber = phoneNumber.replace(/\D/g, '');
+                whatsappURL = `https://wa.me/${cleanNumber}?text=${message}`;
+            }
+            
+            window.open(whatsappURL, '_blank');
+            closeWhatsAppModal();
+        }
+
         // تهيئة النظام
         document.addEventListener('DOMContentLoaded', function() {
+            // تهيئة البيانات الأولية إذا لم تكن موجودة
+            if (db.projects.length === 0) {
+                db.projects.push({
+                    id: 'proj_1',
+                    title: "نظام ذكي لإدارة المكتبات الجامعية",
+                    supervisor: "د. أحمد محمود",
+                    department: "cs",
+                    year: "2024",
+                    semester: "1",
+                    students: ["محمد خالد", "سارة أحمد", "عمر حسن"],
+                    description: "نظام متكامل لإدارة عمليات المكتبات الجامعية باستخدام تقنيات الذكاء الاصطناعي",
+                    createdAt: new Date().toISOString(),
+                    status: "نشط"
+                });
+                
+                db.projects.push({
+                    id: 'proj_2',
+                    title: "منصة التعليم الإلكتروني المتقدمة",
+                    supervisor: "د. فاطمة علي",
+                    department: "se",
+                    year: "2024",
+                    semester: "2",
+                    students: ["خالد عبد الله", "نورة محمد"],
+                    description: "منصة تعليمية تفاعلية تدعم التعلم الذاتي والتقييم الآلي",
+                    createdAt: new Date().toISOString(),
+                    status: "نشط"
+                });
+                
+                saveDatabase();
+            }
+            
             updateStats();
-            console.log('نظام تقييم مشاريع التخرج محمل وجاهز للاستخدام');
+            console.log('نظام إدارة مشاريع التخرج العلمية - جاهز للاستخدام');
         });
     </script>
 </body>
