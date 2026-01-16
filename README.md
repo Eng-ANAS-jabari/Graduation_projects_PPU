@@ -239,11 +239,7 @@
                         <p class="font-bold text-indigo-800">المهندس:</p>
                         <p class="text-lg font-black text-gray-800">أنس جعبري</p>
                         <p class="text-gray-600 mt-2">مهندس مساحة </p>
-                    </div>
-                    <div class="p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl">
-                        <p class="font-bold text-emerald-800">النسخة:</p>
-                    </div>   
-                    </div>
+                 
                 </div>
                 <div class="mt-6 text-center">
                     <button onclick="closeCopyright()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg">
