@@ -240,7 +240,8 @@
                         <p class="text-lg font-black text-gray-800">أنس جعبري</p>
                         <p class="text-gray-600 mt-2">مهندس مساحة </p>
                     </div>
-                    
+                    <div class="p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl">
+                        <p class="font-bold text-emerald-800">النسخة:</p>
                     </div>   
                     </div>
                 </div>
