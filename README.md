@@ -388,7 +388,7 @@
 
         <div class="mt-6 flex gap-4 flex-wrap">
             <button onclick="syncAllToGoogleSheet()" class="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-700 hover:from-orange-600 hover:to-orange-800 text-white font-bold rounded-lg transition">
-                <i class="fas fa-cloud-upload-alt ml-2"></i>مزامنة جميع البيانات
+                <i class="fas fa-cloud-upload-alt ml-2"></i>حفظ البيانات على Google Sheets
             </button>
             <button onclick="exportDirectFromSheet()" class="px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-white font-bold rounded-lg transition">
                 <i class="fas fa-database ml-2"></i>تصدير مباشر من Google Sheets
