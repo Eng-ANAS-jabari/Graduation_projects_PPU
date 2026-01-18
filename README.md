@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
     <meta charset="UTF-8">
@@ -71,24 +72,129 @@
             transform: translateY(-2px);
             transition: transform 0.2s ease;
         }
+        
+        /* تأثيرات دخول وخروج */
+        .modal-enter {
+            animation: modalEnter 0.3s ease-out;
+        }
+        
+        @keyframes modalEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .animate-shake {
+            animation: shake 0.5s ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
     
-<div id="loading" class="fixed inset-0 bg-white/90 flex items-center justify-center z-50 hidden">
+<!-- طبقة نظام الحماية -->
+<div id="securityLayer" class="fixed inset-0 bg-gradient-to-br from-indigo-900 to-purple-900 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 modal-enter">
+        <div class="text-center mb-8">
+            <div class="h-20 w-20 rounded-full bg-indigo-100 flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-lock text-3xl text-indigo-600"></i>
+            </div>
+            <h2 class="text-2xl font-black text-gray-800">نظام الحماية</h2>
+            <p class="text-gray-600 mt-2">أدخل كلمة المرور للوصول للنظام</p>
+        </div>
+        
+        <div class="space-y-4">
+            <div>
+                <label class="block font-bold text-gray-700 mb-2">كلمة المرور:</label>
+                <div class="relative">
+                    <input type="password" id="passwordInput" class="w-full p-4 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none text-center text-lg tracking-widest" placeholder="••••••••">
+                    <button onclick="togglePassword()" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                        <i id="passwordEye" class="far fa-eye"></i>
+                    </button>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">كلمة المرور: admin123</p>
+            </div>
+            
+            <div class="mt-6">
+                <button onclick="login()" class="w-full py-3 bg-gradient-to-r from-indigo-600 to-indigo-800 hover:from-indigo-700 hover:to-indigo-900 text-white font-black rounded-lg transition shadow-md hover:shadow-lg">
+                    <i class="fas fa-sign-in-alt ml-2"></i>دخول للنظام
+                </button>
+            </div>
+            
+            <div class="mt-4 text-center">
+                <button onclick="forgotPassword()" class="text-sm text-indigo-600 hover:text-indigo-800">
+                    <i class="fas fa-key ml-1"></i>نسيت كلمة المرور؟
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة تغيير كلمة المرور -->
+<div id="changePasswordModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 modal-enter">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-black text-gray-800"><i class="fas fa-key ml-2"></i>تغيير كلمة المرور</h3>
+            <button onclick="closeChangePassword()" class="text-gray-500 hover:text-gray-800">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="space-y-4">
+            <div>
+                <label class="block font-bold text-gray-700 mb-2">كلمة المرور الحالية:</label>
+                <input type="password" id="currentPassword" class="w-full p-3 border-2 border-gray-300 rounded-lg">
+            </div>
+            
+            <div>
+                <label class="block font-bold text-gray-700 mb-2">كلمة المرور الجديدة:</label>
+                <input type="password" id="newPassword" class="w-full p-3 border-2 border-gray-300 rounded-lg">
+            </div>
+            
+            <div>
+                <label class="block font-bold text-gray-700 mb-2">تأكيد كلمة المرور:</label>
+                <input type="password" id="confirmPassword" class="w-full p-3 border-2 border-gray-300 rounded-lg">
+            </div>
+            
+            <div class="mt-6 flex gap-4">
+                <button onclick="saveNewPassword()" class="flex-1 py-3 bg-gradient-to-r from-green-600 to-green-800 text-white font-black rounded-lg">
+                    <i class="fas fa-save ml-2"></i>حفظ
+                </button>
+                <button onclick="closeChangePassword()" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 rounded-lg">
+                    إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="loading" class="fixed inset-0 bg-white/90 flex items-center justify-center z-40 hidden">
     <div class="text-center">
         <div class="block animate-spin rounded-full h-16 w-16 border-4 border-indigo-600 border-t-transparent"></div>
         <p class="mt-4 font-black text-indigo-900 text-lg">جاري مزامنة البيانات...</p>
     </div>
 </div>
 
-<div id="app" class="max-w-7xl mx-auto space-y-6 p-4">
+<div id="app" class="max-w-7xl mx-auto space-y-6 p-4 hidden">
     <!-- رأس الصفحة -->
     <header class="text-center py-6 bg-gradient-to-r from-indigo-900 to-indigo-700 rounded-2xl shadow-xl text-white relative">
-        <div class="absolute top-4 left-4 text-sm opacity-80">
-            <button onclick="showCopyright()" class="hover:text-yellow-300 transition">
-                <i class="fas fa-copyright"></i> حقوق النشر
+        <div class="absolute top-4 left-4 text-sm opacity-80 flex gap-2">
+            <button onclick="showCopyright()" class="px-3 py-1 bg-white/20 hover:bg-white/30 rounded-lg transition">
+                <i class="fas fa-copyright ml-1"></i>حقوق النشر
             </button>
+            <div id="userBadge" class="px-3 py-1 bg-emerald-500 rounded-lg">
+                <i class="fas fa-user-shield ml-1"></i>
+                <span id="userRole">مدير النظام</span>
+            </div>
         </div>
         <h1 class="text-3xl md:text-4xl font-black mb-2">نظام إدارة تقييم المناقشات</h1>
         <p class="text-lg opacity-90">الإصدار النهائي - نظام متكامل للتقييم الإلكتروني</p>
@@ -98,6 +204,8 @@
             <button onclick="switchSection('admin')" class="px-5 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition"><i class="fas fa-chart-bar ml-2"></i>الإحصائيات</button>
             <button onclick="fetchSheetData()" class="px-5 py-2 bg-emerald-500 hover:bg-emerald-600 rounded-lg transition"><i class="fas fa-sync-alt ml-2"></i>مزامنة البيانات</button>
             <button onclick="syncToGoogleSheet()" class="px-5 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg transition"><i class="fas fa-cloud-upload-alt ml-2"></i>حفظ في Google Sheets</button>
+            <button onclick="showChangePassword()" class="px-5 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg transition"><i class="fas fa-key ml-2"></i>تغيير كلمة السر</button>
+            <button onclick="logout()" class="px-5 py-2 bg-red-500 hover:bg-red-600 rounded-lg transition"><i class="fas fa-sign-out-alt ml-2"></i>تسجيل خروج</button>
         </div>
     </header>
 
@@ -123,14 +231,14 @@
         
         <!-- إضافة: إدخال اسم الناقش -->
         <div class="mt-8 pt-6 border-t border-gray-200">
-            <h3 class="text-xl font-black text-gray-800 mb-4"><i class="fas fa-user-edit ml-2"></i>إعدادات الناقش/المشرف </h3>
+            <h3 class="text-xl font-black text-gray-800 mb-4"><i class="fas fa-user-edit ml-2"></i>إعدادات الناقش/المشرف</h3>
             <div class="grid md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block font-bold text-gray-700 mb-2">اسم الناقش/المشرف :</label>
+                    <label class="block font-bold text-gray-700 mb-2">اسم الناقش/المشرف:</label>
                     <input type="text" id="examinerName" placeholder="اسم الناقش/المشرف ..." class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none">
                 </div>
                 <div>
-                    <label class="block font-bold text-gray-700 mb-2">التوقيع :</label>
+                    <label class="block font-bold text-gray-700 mb-2">التوقيع:</label>
                     <div class="flex gap-2">
                         <input type="text" id="examinerSignature" placeholder="التوقيع..." class="flex-1 p-3 border-2 border-gray-300 rounded-lg">
                         <button onclick="clearSignature()" class="px-4 py-3 bg-gray-200 hover:bg-gray-300 rounded-lg"><i class="fas fa-eraser"></i></button>
@@ -314,7 +422,7 @@
 
     <!-- قسم حقوق النشر -->
     <div id="copyrightModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 modal-enter">
             <div class="text-center mb-6">
                 <i class="fas fa-copyright text-4xl text-indigo-600 mb-4"></i>
                 <h3 class="text-2xl font-black text-gray-800">حقوق النشر والتطوير</h3>
@@ -323,7 +431,7 @@
                 <div class="p-4 bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl">
                     <p class="font-bold text-indigo-800">المهندس:</p>
                     <p class="text-lg font-black text-gray-800">أنس جعبري</p>
-                    <p class="text-gray-600 mt-2">مهندس مساحة </p>
+                    <p class="text-gray-600 mt-2">مهندس مساحة</p>
                 </div>
                 <div class="p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl">
                     <p class="font-bold text-emerald-800">النسخة:</p>
@@ -341,7 +449,7 @@
 
     <!-- قسم التقييم السريع -->
     <div id="quickEvalModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto modal-enter">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-2xl font-black text-gray-800"><i class="fas fa-bolt ml-2"></i>التقييم السريع للمجموعة</h3>
                 <button onclick="closeQuickEval()" class="text-gray-500 hover:text-gray-800"><i class="fas fa-times"></i></button>
@@ -384,7 +492,7 @@
 
     <!-- قسم تقييم فردي -->
     <div id="studentEvalModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 modal-enter">
             <div class="text-center mb-6">
                 <h3 id="studentNameTitle" class="text-2xl font-black text-gray-800"></h3>
                 <p id="studentGroupInfo" class="text-gray-600 mt-2"></p>
@@ -449,6 +557,10 @@
     let customCriteria = JSON.parse(localStorage.getItem('custom_criteria')) || [];
     let examiners = JSON.parse(localStorage.getItem('examiners_list')) || [];
 
+    // نظام الحماية المبسط
+    const DEFAULT_PASSWORD = "admin123";
+    let systemPassword = localStorage.getItem('system_password') || DEFAULT_PASSWORD;
+
     const roleSettings = {
         supervisor: { 
             title: 'تقييم المشرف', 
@@ -468,12 +580,254 @@
             badge: 'bg-emerald-600',
             criteria: [
                 { name: 'جودة العرض التقديمي', max: 20 },
-                { name: 'القدرة على النقاش ', max: 30 },
-                { name: 'الكتاب المظري والعملي ', max: 50 }
+                { name: 'القدرة على النقاش', max: 30 },
+                { name: 'الكتاب المظري والعملي', max: 50 }
             ]
         }
     };
 
+    // نظام الحماية المبسط
+    function login() {
+        const passwordInput = document.getElementById('passwordInput').value;
+        
+        if (passwordInput === systemPassword) {
+            // إخفاء طبقة الحماية
+            document.getElementById('securityLayer').classList.add('hidden');
+            document.getElementById('app').classList.remove('hidden');
+            
+            // حفظ حالة الدخول
+            localStorage.setItem('user_logged_in', 'true');
+            
+            alert('🎉 تم الدخول بنجاح! مرحبًا بك في نظام إدارة تقييم المناقشات.');
+        } else {
+            alert('كلمة المرور غير صحيحة! حاول مرة أخرى.');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordInput').focus();
+            
+            // تأثير اهتزاز عند خطأ
+            const input = document.getElementById('passwordInput');
+            input.classList.add('border-red-500');
+            input.classList.add('animate-shake');
+            setTimeout(() => {
+                input.classList.remove('border-red-500');
+                input.classList.remove('animate-shake');
+            }, 500);
+        }
+    }
+
+    function togglePassword() {
+        const passwordInput = document.getElementById('passwordInput');
+        const eyeIcon = document.getElementById('passwordEye');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        }
+    }
+
+    function forgotPassword() {
+        alert(`كلمة المرور الافتراضية هي: ${DEFAULT_PASSWORD}\nيمكنك تغييرها من خلال خيار "تغيير كلمة السر" بعد الدخول للنظام.`);
+    }
+
+    function showChangePassword() {
+        document.getElementById('changePasswordModal').classList.remove('hidden');
+        document.getElementById('changePasswordModal').classList.add('flex');
+    }
+
+    function closeChangePassword() {
+        document.getElementById('changePasswordModal').classList.add('hidden');
+        document.getElementById('changePasswordModal').classList.remove('flex');
+    }
+
+    function saveNewPassword() {
+        const currentPass = document.getElementById('currentPassword').value;
+        const newPass = document.getElementById('newPassword').value;
+        const confirmPass = document.getElementById('confirmPassword').value;
+        
+        if (currentPass !== systemPassword) {
+            alert('كلمة المرور الحالية غير صحيحة!');
+            return;
+        }
+        
+        if (newPass !== confirmPass) {
+            alert('كلمة المرور الجديدة غير متطابقة!');
+            return;
+        }
+        
+        if (newPass.length < 6) {
+            alert('كلمة المرور يجب أن تكون 6 أحرف على الأقل!');
+            return;
+        }
+        
+        systemPassword = newPass;
+        localStorage.setItem('system_password', newPass);
+        
+        alert('✅ تم تغيير كلمة المرور بنجاح!');
+        closeChangePassword();
+    }
+
+    function logout() {
+        if (confirm('هل تريد تسجيل الخروج من النظام؟')) {
+            localStorage.removeItem('user_logged_in');
+            
+            document.getElementById('app').classList.add('hidden');
+            document.getElementById('securityLayer').classList.remove('hidden');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordInput').type = 'password';
+            document.getElementById('passwordEye').classList.remove('fa-eye-slash');
+            document.getElementById('passwordEye').classList.add('fa-eye');
+        }
+    }
+
+    // دالة إضافة + و - للتقييم
+    function openEvalForm(studentName) {
+        const criteriaList = document.getElementById('criteriaList');
+        criteriaList.innerHTML = '';
+        
+        const settings = roleSettings[activeRole];
+        const customForRole = customCriteria.filter(c => c.role === activeRole);
+        const allCriteria = [...settings.criteria, ...customForRole];
+        
+        let maxTotal = 0;
+        
+        allCriteria.forEach((criterion, index) => {
+            maxTotal += criterion.max;
+            
+            const criterionHTML = `
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                <div class="flex justify-between items-center mb-3">
+                    <div class="flex items-center">
+                        <label class="font-bold text-gray-800">${criterion.name}</label>
+                        ${criterion.role ? '<span class="mr-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">مخصص</span>' : ''}
+                    </div>
+                    <span class="text-sm text-gray-600">الحد الأقصى: ${criterion.max}</span>
+                </div>
+                
+                <div class="flex items-center gap-3 mb-3">
+                    <button onclick="adjustScore(${index}, -1)" class="w-10 h-10 bg-red-100 text-red-700 rounded-full hover:bg-red-200 transition flex items-center justify-center">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    
+                    <div class="flex-1">
+                        <input 
+                            type="range" 
+                            min="0" 
+                            max="${criterion.max}" 
+                            value="0" 
+                            class="w-full h-3 bg-gray-300 rounded-lg appearance-none cursor-pointer slider-${index}"
+                            oninput="updateScoreDisplay(${index}, this.value); calculateTotal()"
+                        >
+                    </div>
+                    
+                    <button onclick="adjustScore(${index}, 1)" class="w-10 h-10 bg-green-100 text-green-700 rounded-full hover:bg-green-200 transition flex items-center justify-center">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                
+                <div class="flex justify-between mt-2">
+                    <span>0</span>
+                    <div class="flex items-center gap-2">
+                        <span class="font-black text-lg ${settings.color.split(' ')[2]}">
+                            <span id="score${index}">0</span> / ${criterion.max}
+                        </span>
+                        <button onclick="setMaxScore(${index}, ${criterion.max})" class="px-2 py-1 text-xs bg-blue-100 text-blue-700 hover:bg-blue-200 rounded">
+                            أعلى
+                        </button>
+                        <button onclick="setMinScore(${index})" class="px-2 py-1 text-xs bg-gray-100 text-gray-700 hover:bg-gray-200 rounded">
+                            صفر
+                        </button>
+                    </div>
+                    <span>${criterion.max}</span>
+                </div>
+            </div>`;
+            
+            criteriaList.innerHTML += criterionHTML;
+        });
+        
+        document.getElementById('maxScoreInfo').textContent = `الدرجة القصوى: ${maxTotal}`;
+        document.getElementById('criteriaSection').classList.remove('hidden');
+        document.getElementById('criteriaSection').dataset.student = studentName;
+        
+        window.scrollTo({ top: document.getElementById('criteriaSection').offsetTop, behavior: 'smooth' });
+    }
+
+    function adjustScore(index, change) {
+        const slider = document.querySelector(`.slider-${index}`);
+        const max = parseInt(slider.max);
+        const currentValue = parseInt(slider.value) || 0;
+        let newValue = currentValue + change;
+        
+        // التأكد من أن القيمة ضمن النطاق
+        if (newValue < 0) newValue = 0;
+        if (newValue > max) newValue = max;
+        
+        slider.value = newValue;
+        updateScoreDisplay(index, newValue);
+        calculateTotal();
+        
+        // تأثير عند التغيير
+        const scoreElement = document.getElementById(`score${index}`);
+        scoreElement.classList.add('animate-pulse');
+        setTimeout(() => {
+            scoreElement.classList.remove('animate-pulse');
+        }, 300);
+    }
+
+    function setMaxScore(index, max) {
+        const slider = document.querySelector(`.slider-${index}`);
+        slider.value = max;
+        updateScoreDisplay(index, max);
+        calculateTotal();
+    }
+
+    function setMinScore(index) {
+        const slider = document.querySelector(`.slider-${index}`);
+        slider.value = 0;
+        updateScoreDisplay(index, 0);
+        calculateTotal();
+    }
+
+    function updateScoreDisplay(index, value) {
+        const scoreElement = document.getElementById(`score${index}`);
+        if (scoreElement) {
+            scoreElement.textContent = value;
+        }
+    }
+
+    function calculateTotal() {
+        const settings = roleSettings[activeRole];
+        const customForRole = customCriteria.filter(c => c.role === activeRole);
+        const allCriteria = [...settings.criteria, ...customForRole];
+        let total = 0;
+        
+        allCriteria.forEach((criterion, index) => {
+            const slider = document.querySelector(`.slider-${index}`);
+            if (slider) total += parseInt(slider.value) || 0;
+        });
+        
+        document.getElementById('totalScore').textContent = total;
+        
+        // تغيير لون المجموع حسب القيمة
+        const totalElement = document.getElementById('totalScore');
+        totalElement.classList.remove('text-indigo-700', 'text-green-600', 'text-yellow-600', 'text-red-600');
+        
+        if (total >= 90) {
+            totalElement.classList.add('text-green-600');
+        } else if (total >= 70) {
+            totalElement.classList.add('text-indigo-700');
+        } else if (total >= 60) {
+            totalElement.classList.add('text-yellow-600');
+        } else {
+            totalElement.classList.add('text-red-600');
+        }
+    }
+
+    // بقية الدوال بدون تغيير
     function addCustomCriterion() {
         const criterionName = prompt('أدخل اسم المعيار الجديد:', 'معيار إضافي');
         if (!criterionName) return;
@@ -644,76 +998,6 @@
         document.getElementById('studentsContainer').innerHTML = studentsHTML;
     }
 
-    function openEvalForm(studentName) {
-        const criteriaList = document.getElementById('criteriaList');
-        criteriaList.innerHTML = '';
-        
-        const settings = roleSettings[activeRole];
-        const customForRole = customCriteria.filter(c => c.role === activeRole);
-        const allCriteria = [...settings.criteria, ...customForRole];
-        
-        let maxTotal = 0;
-        
-        allCriteria.forEach((criterion, index) => {
-            maxTotal += criterion.max;
-            
-            const criterionHTML = `
-            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                <div class="flex justify-between items-center mb-3">
-                    <div class="flex items-center">
-                        <label class="font-bold text-gray-800">${criterion.name}</label>
-                        ${criterion.role ? '<span class="mr-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">مخصص</span>' : ''}
-                    </div>
-                    <span class="text-sm text-gray-600">الحد الأقصى: ${criterion.max}</span>
-                </div>
-                <input 
-                    type="range" 
-                    min="0" 
-                    max="${criterion.max}" 
-                    value="0" 
-                    class="w-full h-3 bg-gray-300 rounded-lg appearance-none cursor-pointer slider-${index}"
-                    oninput="updateScoreDisplay(${index}, this.value); calculateTotal()"
-                >
-                <div class="flex justify-between mt-2">
-                    <span>0</span>
-                    <span class="font-black text-lg ${settings.color.split(' ')[2]}">
-                        <span id="score${index}">0</span> / ${criterion.max}
-                    </span>
-                    <span>${criterion.max}</span>
-                </div>
-            </div>`;
-            
-            criteriaList.innerHTML += criterionHTML;
-        });
-        
-        document.getElementById('maxScoreInfo').textContent = `الدرجة القصوى: ${maxTotal}`;
-        document.getElementById('criteriaSection').classList.remove('hidden');
-        document.getElementById('criteriaSection').dataset.student = studentName;
-        
-        window.scrollTo({ top: document.getElementById('criteriaSection').offsetTop, behavior: 'smooth' });
-    }
-
-    function updateScoreDisplay(index, value) {
-        const scoreElement = document.getElementById(`score${index}`);
-        if (scoreElement) {
-            scoreElement.textContent = value;
-        }
-    }
-
-    function calculateTotal() {
-        const settings = roleSettings[activeRole];
-        const customForRole = customCriteria.filter(c => c.role === activeRole);
-        const allCriteria = [...settings.criteria, ...customForRole];
-        let total = 0;
-        
-        allCriteria.forEach((criterion, index) => {
-            const slider = document.querySelector(`.slider-${index}`);
-            if (slider) total += parseInt(slider.value) || 0;
-        });
-        
-        document.getElementById('totalScore').textContent = total;
-    }
-
     function saveResults() {
         const studentName = document.getElementById('criteriaSection').dataset.student;
         const groupId = document.getElementById('groupSelect').value;
@@ -865,7 +1149,6 @@
                 timestamp: new Date().toISOString()
             };
             
-            // استخدام fetch مع no-cors mode للعمل مع Google Apps Script
             await fetch(GAS_WEB_APP_URL, {
                 method: 'POST',
                 mode: 'no-cors',
@@ -2018,6 +2301,7 @@
         const storedResults = localStorage.getItem('grad_sys_results');
         const storedCriteria = localStorage.getItem('custom_criteria');
         const storedExaminers = localStorage.getItem('examiners_list');
+        const userLoggedIn = localStorage.getItem('user_logged_in');
         
         if (storedDB) {
             mainDB = JSON.parse(storedDB);
@@ -2035,6 +2319,12 @@
         if (storedExaminers) {
             examiners = JSON.parse(storedExaminers);
             updateExaminersFilter();
+        }
+        
+        // التحقق من حالة الدخول السابقة
+        if (userLoggedIn === 'true') {
+            document.getElementById('securityLayer').classList.add('hidden');
+            document.getElementById('app').classList.remove('hidden');
         }
         
         updateStats();
