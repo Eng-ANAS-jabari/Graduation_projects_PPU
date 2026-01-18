@@ -121,7 +121,7 @@
                         <i id="passwordEye" class="far fa-eye"></i>
                     </button>
                 </div>
-                <p class="text-xs text-gray-500 mt-2">كلمة المرور: admin123</p>
+                <p class="text-xs text-gray-500 mt-2">كلمة المرور: 1234</p>
             </div>
             
             <div class="mt-6">
@@ -558,7 +558,7 @@
     let examiners = JSON.parse(localStorage.getItem('examiners_list')) || [];
 
     // نظام الحماية المبسط
-    const DEFAULT_PASSWORD = "admin123";
+    const DEFAULT_PASSWORD = "1234";
     let systemPassword = localStorage.getItem('system_password') || DEFAULT_PASSWORD;
 
     const roleSettings = {
